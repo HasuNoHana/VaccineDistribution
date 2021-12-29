@@ -33,7 +33,7 @@ public class ModelGenerator {
 
         int[][][] adjacencyMatrix = new int[iterationsNumber][nodesNumber][nodesNumber];
 
-        for(int i = 0; i < adjacencyMatrix.length; i++)
+        for(int i = 0; i < iterationsNumber; i++)
             adjacencyMatrix[i] = generateMatrix(random, maxEdgeWage, nodesNumber);
 
         Model model = new Model(nodesNumber, iterationsNumber);
