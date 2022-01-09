@@ -1,10 +1,11 @@
-//import model.generator.ModelGenerator;
+package model.simulatedAnnealing;//import model.generator.ModelGenerator;
 //import model.io.JSONModelWriter;
 //import model.structures.Model;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        System.out.printf("Hello");
 //        long seedM1 = -8931950316686792133L;
 //        long seedM2 = 2705643145072468196L;
 //        long seedM3 = 8064995938733697569L;
