@@ -7,8 +7,9 @@ public class Node {
     private boolean isVaccinated;
     private int parameter;
     private int illnessCasesStep;
+    private int id;
 
-    public Node(int residentsNumber, int parameter) {
+    public Node(int id, int residentsNumber, int parameter) {
         this.residentsNumber = residentsNumber;
         this.illnessCases = 0;
         this.healthyNumber = residentsNumber - illnessCases;
@@ -17,6 +18,7 @@ public class Node {
         illnessCasesStep = 0;
         updateIllnessCases();
     }
+
 
     public void updateIllnessCases()
     {
