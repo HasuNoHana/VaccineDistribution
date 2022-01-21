@@ -1,32 +1,47 @@
 package model.structures;
 
+import java.util.Objects;
+
 public class Node {
     private int residentsNumber;
     private int illnessCases;
     private int healthyNumber;
     private boolean isVaccinated;
-    private int parameter;
-    private int illnessCasesStep;
+    private int infectingParameter;
     private int id;
+    private int visitIteration;
 
-    public Node(int id, int residentsNumber, int parameter) {
+    public Node(int id, int residentsNumber, int infectingParameter) {
         this.residentsNumber = residentsNumber;
         this.illnessCases = 0;
         this.healthyNumber = residentsNumber - illnessCases;
-        this.parameter = parameter;
+        this.infectingParameter = infectingParameter;
         this.isVaccinated = false;
-        illnessCasesStep = 0;
-        updateIllnessCases();
+        updateIllnessCases(0);
     }
 
+    public Node(Node node)
+    {
+        residentsNumber = node.residentsNumber;
+        illnessCases = node.illnessCases;
+        healthyNumber = node.healthyNumber;
+        isVaccinated = node.isVaccinated;
+        infectingParameter = node.infectingParameter;
+        id = node.id;
+    }
 
-    public void updateIllnessCases()
+    public void updateIllnessCases(int iterationNumber)
     {
         if(isVaccinated)
             return;
 
-        illnessCases = Math.min((int) Math.pow(parameter, illnessCasesStep++), residentsNumber);
+        illnessCases = Math.min((int) Math.pow(infectingParameter, iterationNumber), residentsNumber);
         healthyNumber = residentsNumber - illnessCases;
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public int getResidentsNumber() {
@@ -45,6 +60,11 @@ public class Node {
         this.illnessCases = illnessCases;
     }
 
+    public int getIllnessCasesPrediction(int iterationNumber)
+    {
+        return Math.min((int) Math.pow(infectingParameter, iterationNumber), residentsNumber);
+    }
+
     public int getHealthyNumber() {
         return healthyNumber;
     }
@@ -61,13 +81,34 @@ public class Node {
         this.isVaccinated = isVaccinated;
     }
 
-    public double getParameter() {
-        return parameter;
+    public double getInfectingParameter() {
+        return infectingParameter;
     }
 
-    public void setParameter(int parameter) {
-        this.parameter = parameter;
+    public void setInfectingParameter(int infectingParameter) {
+        this.infectingParameter = infectingParameter;
     }
 
+    public int getVisitIteration() {
+        return visitIteration;
+    }
 
+    public void visit(int visitIteration)
+    {
+        this.visitIteration = visitIteration;
+        this.isVaccinated = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return residentsNumber == node.residentsNumber && illnessCases == node.illnessCases && healthyNumber == node.healthyNumber && isVaccinated == node.isVaccinated && infectingParameter == node.infectingParameter  && id == node.id && visitIteration == node.visitIteration;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(residentsNumber, illnessCases, healthyNumber, isVaccinated, infectingParameter, id, visitIteration);
+    }
 }
