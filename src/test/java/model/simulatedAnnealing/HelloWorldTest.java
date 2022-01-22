@@ -1,12 +1,14 @@
 package model.simulatedAnnealing;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class HelloWorldTest {
     @Test
-    void helloWorld() {
+    public void helloWorld() {
         System.out.printf("Hello World!");
-        Assertions.assertTrue(true);
+        assertTrue(true);
     }
 }

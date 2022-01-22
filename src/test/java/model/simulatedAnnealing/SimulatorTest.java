@@ -5,12 +5,12 @@ import model.structures.GraphImpl;
 import model.structures.GraphPath;
 import model.structures.GraphPathImpl;
 import model.structures.Node;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 
-class SimulatorTest {
+public class SimulatorTest {
 
     @Test
     public void shouldFindOptimalPathInSimpleGraph() {
