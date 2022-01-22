@@ -1,7 +1,7 @@
 package model.structures;
 
 public interface Graph {
-    GraphPath getSimplePath();
+    GraphPath getRandomPath();
 
     /**
      * Returns graph G` with updated edges and number of ill people per node. G` should have one node less (nodeToBeRemoved).

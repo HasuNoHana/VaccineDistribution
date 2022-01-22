@@ -1,6 +1,7 @@
 package model.graphfactory;
 
 import model.structures.Graph;
+import model.structures.GraphImpl;
 import model.structures.Node;
 
 import java.util.ArrayList;
@@ -34,6 +35,6 @@ public class GraphFactory {
         for(Node node : nodeArrayList)
             node.setId(i++);
 
-        return new Graph(nodeArrayList, adjacencyMatrix);
+        return new GraphImpl(nodeArrayList, adjacencyMatrix);
     }
 }
