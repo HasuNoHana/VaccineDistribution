@@ -1,41 +1,15 @@
 package model.structures;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+public interface GraphPath {
+    int getRandomNode();//TODO should never return first node
 
-public class GraphPath {
+    int getRandomNodeDiffrentThat(int nodeId1);//TODO should never return first node
 
-    private ArrayList<Node> path;
-    private int sumOfWages;
-    private ArrayList<Integer> wages;
+    GraphPath getCopyWithSwapedNodes(int nodeId1, int nodeId2);// TODO this method should throw exception when first node in path is being swapped
 
-    public GraphPath()
-    {
-        path = new ArrayList<>();
-        wages = new ArrayList<>();
-        sumOfWages = 0;
-    }
+    int getSumOfWages();
 
-    public void addToPath(Node node, int wage)
-    {
-        Node theNewNode = new Node(node);
+    int getSize();
 
-        path.add(theNewNode);
-        wages.add(wage);
-        sumOfWages += wage;
-    }
-
-    public ArrayList<Node> getPath() {
-        return path;
-    }
-
-    public int getSumOfWages()
-    {
-        return sumOfWages;
-    }
-
-    public int getWageOfNode(Node n)
-    {
-        return wages.get(path.indexOf(n));
-    }
+    Node getFirstNode();
 }
