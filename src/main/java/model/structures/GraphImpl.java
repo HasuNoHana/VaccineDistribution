@@ -2,7 +2,10 @@ package model.structures;
 
 import model.generator.ModelGenerator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Random;
 
 public class GraphImpl implements Graph {
 
@@ -49,7 +52,7 @@ public class GraphImpl implements Graph {
         nodes = new HashMap<>();
         edgeWageSum = 0;
 
-        for(Node node : nodeArrayList)
+        for (Node node : nodeArrayList)
             nodes.put(node.getId(), node);
 
         for (int[] matrix : adjacencyMatrix)
@@ -57,6 +60,8 @@ public class GraphImpl implements Graph {
                 edgeWageSum += matrix[j];
 
         edgeWageSum /= 2;
+        randomForAdjacencyMatrix = new Random(); //TODO check what value should be used here
+
 
     }
 

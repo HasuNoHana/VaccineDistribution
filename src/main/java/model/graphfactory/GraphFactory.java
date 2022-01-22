@@ -28,11 +28,10 @@ public class GraphFactory {
         adjacencyMatrix[secondNodeId][firstNodeId] = wage;
     }
 
-    Graph build()
-    {
+    public Graph build() {
         int i = 0;
 
-        for(Node node : nodeArrayList)
+        for (Node node : nodeArrayList)
             node.setId(i++);
 
         return new GraphImpl(nodeArrayList, adjacencyMatrix);

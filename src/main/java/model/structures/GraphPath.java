@@ -1,15 +1,23 @@
 package model.structures;
 
 public interface GraphPath {
-    Node getRandomNode();//should never return first node
+    void addToPath(Node node, int wage);
 
-    Node getRandomNodeDifferentThat(int nodeId1);//should never return first node
+    void addToPath(Node node);
 
-    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) throws Exception;//this method should throw exception when first node in path is being swapped
+    Node getRandomNode();
+
+    Node getRandomNodeDifferentThat(int nodeId1);
+
+    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2);
 
     int getSumOfWages();
 
     int getSize();
 
     Node getFirstNode();
+
+    Node getSecondNode();
+
+    int getFirstEdge();
 }

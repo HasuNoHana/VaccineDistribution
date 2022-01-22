@@ -1,7 +1,6 @@
 package model.structures;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -13,8 +12,11 @@ public class GraphPathImpl implements GraphPath {
     private ArrayList<Integer> wages;
     private int[][] adjacencyMatrix;
 
-    public GraphPathImpl(int[][] adjacencyMatrix)
-    {
+    public GraphPathImpl() {
+        this(null); //TODO fix this
+    }
+
+    public GraphPathImpl(int[][] adjacencyMatrix) {
         path = new ArrayList<>();
         wages = new ArrayList<>();
         sumOfWages = 0;
@@ -29,8 +31,8 @@ public class GraphPathImpl implements GraphPath {
         this.path = path;
     }
 
-    public void addToPath(Node node, int wage)
-    {
+    @Override
+    public void addToPath(Node node, int wage) {
         Node theNewNode = new Node(node);
 
         path.add(theNewNode);
@@ -39,8 +41,8 @@ public class GraphPathImpl implements GraphPath {
         sumOfWages += wage;
     }
 
-    public void addToPath(Node node)
-    {
+    @Override
+    public void addToPath(Node node) {
         addToPath(node, 0);
     }
 
@@ -68,11 +70,11 @@ public class GraphPathImpl implements GraphPath {
         return n;
     }
 
-    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) throws Exception {
+    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) {
 
         ArrayList<Node> nodeArrayList = new ArrayList<>();
 
-        for(Node n : path)
+        for (Node n : path)
             nodeArrayList.add(new Node(n));
 
         ArrayList<Node> nodesToSwap = nodeArrayList.
@@ -81,7 +83,7 @@ public class GraphPathImpl implements GraphPath {
                 collect(Collectors.toCollection(ArrayList::new));
 
         if(nodeArrayList.indexOf(nodesToSwap.get(0)) == 0 || nodeArrayList.indexOf(nodesToSwap.get(1)) == 0)
-            throw new Exception("");
+            throw new RuntimeException("TODO POPRAW MNIE PATRYK!");
 
         if(nodesToSwap.size() == 2)
             Collections.swap(nodeArrayList, nodeArrayList.indexOf(nodesToSwap.get(0)), nodeArrayList.indexOf(nodesToSwap.get(1)));
@@ -114,13 +116,21 @@ public class GraphPathImpl implements GraphPath {
         return path.get(0);
     }
 
-    public Node getLastNode()
-    {
+    @Override
+    public Node getSecondNode() {
+        return path.get(1);
+    }
+
+    @Override
+    public int getFirstEdge() {
+        return wages.get(0);
+    }
+
+    public Node getLastNode() {
         return path.get(path.size() - 1);
     }
 
-    public int getWageOfNode(Node n)
-    {
+    public int getWageOfNode(Node n) {
         return wages.get(path.indexOf(n));
     }
 }

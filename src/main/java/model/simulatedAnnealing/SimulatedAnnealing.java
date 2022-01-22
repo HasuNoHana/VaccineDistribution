@@ -25,10 +25,10 @@ public class SimulatedAnnealing {
     }
 
     private GraphPath doOneStepOfSimulatedAnnealing(GraphPath currentPath, double temperature) {
-        int nodeId1 = currentPath.getRandomNode();
-        int nodeId2 = currentPath.getRandomNodeDiffrentThat(nodeId1);
+        int nodeId1 = currentPath.getRandomNode().getId();
+        int nodeId2 = currentPath.getRandomNodeDifferentThat(nodeId1).getId();
 
-        GraphPath swapedPath = currentPath.getCopyWithSwapedNodes(nodeId1, nodeId2);
+        GraphPath swapedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2);
         int swapedPathCost = costFunction.evaluate(swapedPath);
         int currentPathCost = costFunction.evaluate(currentPath);
 
