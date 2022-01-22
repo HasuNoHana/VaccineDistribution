@@ -34,8 +34,14 @@ public class GraphPathImpl implements GraphPath {
         Node theNewNode = new Node(node);
 
         path.add(theNewNode);
-        wages.add(wage);
+        if(wage != 0)
+            wages.add(wage);
         sumOfWages += wage;
+    }
+
+    public void addToPath(Node node)
+    {
+        addToPath(node, 0);
     }
 
     public ArrayList<Node> getPath() {
