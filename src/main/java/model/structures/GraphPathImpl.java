@@ -1,39 +1,35 @@
 package model.structures;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 public class GraphPathImpl implements GraphPath {
 
-    private ArrayList<Node> path;
+    private ArrayList<Node> nodesInPath;
     private int sumOfWages;
     private ArrayList<Integer> wages;
-    private int[][] adjacencyMatrix;
 
-    public GraphPathImpl(int[][] adjacencyMatrix)
+    public GraphPathImpl()
     {
-        path = new ArrayList<>();
+        nodesInPath = new ArrayList<>();
         wages = new ArrayList<>();
         sumOfWages = 0;
-        this.adjacencyMatrix = adjacencyMatrix;
     }
 
-    private GraphPathImpl(int[][] adjacencyMatrix, int sumOfWages, ArrayList<Integer> wages, ArrayList<Node> path)
+    private GraphPathImpl(int sumOfWages, ArrayList<Integer> wages, ArrayList<Node> nodesInPath)
     {
-        this.adjacencyMatrix = adjacencyMatrix;
         this.sumOfWages = sumOfWages;
         this.wages = wages;
-        this.path = path;
+        this.nodesInPath = nodesInPath;
     }
 
     public void addToPath(Node node, int wage)
     {
         Node theNewNode = new Node(node);
 
-        path.add(theNewNode);
+        nodesInPath.add(theNewNode);
         if(wage != 0)
             wages.add(wage);
         sumOfWages += wage;
@@ -44,17 +40,17 @@ public class GraphPathImpl implements GraphPath {
         addToPath(node, 0);
     }
 
-    public ArrayList<Node> getPath() {
-        return path;
+    public ArrayList<Node> getNodesInPath() {
+        return nodesInPath;
     }
 
     @Override
     public Node getRandomNode() {
         Random random = new Random();
 
-        int positionInPath = Math.max(1, random.nextInt(path.size()));
+        int positionInPath = Math.max(1, random.nextInt(nodesInPath.size()));
 
-        return path.get(positionInPath);
+        return nodesInPath.get(positionInPath);
     }
 
     @Override
@@ -68,11 +64,11 @@ public class GraphPathImpl implements GraphPath {
         return n;
     }
 
-    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) throws Exception {
+    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2, int[][] adjacencyMatrix) throws Exception {
 
         ArrayList<Node> nodeArrayList = new ArrayList<>();
 
-        for(Node n : path)
+        for(Node n : nodesInPath)
             nodeArrayList.add(new Node(n));
 
         ArrayList<Node> nodesToSwap = nodeArrayList.
@@ -96,7 +92,7 @@ public class GraphPathImpl implements GraphPath {
             wages.add(wage);
         }
 
-        return new GraphPathImpl(adjacencyMatrix, sumOfWages, wages, nodeArrayList);
+        return new GraphPathImpl(sumOfWages, wages, nodeArrayList);
     }
 
     public int getSumOfWages()
@@ -106,21 +102,31 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public int getSize() {
-        return path.size();
+        return nodesInPath.size();
     }
 
     @Override
     public Node getFirstNode() {
-        return path.get(0);
+        return nodesInPath.get(0);
     }
 
     public Node getLastNode()
     {
-        return path.get(path.size() - 1);
+        return nodesInPath.get(nodesInPath.size() - 1);
     }
 
-    public int getWageOfNode(Node n)
+    public int getWageAfterTheNode(Node node)
     {
-        return wages.get(path.indexOf(n));
+        if(nodesInPath.contains(node))
+        {
+            int nodeIndexInArray = nodesInPath.indexOf(node);
+
+            if(nodeIndexInArray + 1 >= wages.size())
+                return -1;
+
+            return wages.get(nodeIndexInArray + 1);
+        }
+        else
+            return -1;
     }
 }

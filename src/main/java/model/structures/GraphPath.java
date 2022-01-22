@@ -5,7 +5,7 @@ public interface GraphPath {
 
     Node getRandomNodeDifferentThat(int nodeId1);//should never return first node
 
-    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) throws Exception;//this method should throw exception when first node in path is being swapped
+    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2, int[][] adjacencyMatrix) throws Exception;//this method should throw exception when first node in path is being swapped
 
     int getSumOfWages();
 

@@ -1,6 +1,6 @@
 package model.structures;
 
-import model.generator.ModelGenerator;
+import model.generator.AdjacencyMatrixGenerator;
 
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class GraphImpl implements Graph {
         this.graphSize = graphSize;
         this.edgeWageSum = edgeWageSum;
         randomForAdjacencyMatrix = new Random(seedForWages);
-        adjacencyMatrix = ModelGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
+        adjacencyMatrix = AdjacencyMatrixGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
         generatePeople(seedForHabitats, minimalNumberOfHabitats, maximumNumberOfHabitats, graphSize, infectingParameter);
         iterationStep = 0;
     }
@@ -28,7 +28,9 @@ public class GraphImpl implements Graph {
     {
         this.adjacencyMatrix = adjacencyMatrix;
         this.nodes = nodes;
-        randomForAdjacencyMatrix = new Random();
+
+        randomForAdjacencyMatrix = new Random(defaultSeedForWages);
+        calculateSumOfEdges();
     }
 
     public void setIterationStep(int iterationStep)
@@ -47,19 +49,22 @@ public class GraphImpl implements Graph {
         graphSize = nodeArrayList.size();
 
         nodes = new HashMap<>();
-        edgeWageSum = 0;
 
         for(Node node : nodeArrayList)
             nodes.put(node.getId(), node);
 
+        calculateSumOfEdges();
+    }
+
+    private void calculateSumOfEdges()
+    {
+        edgeWageSum = 0;
         for (int[] matrix : adjacencyMatrix)
             for (int j = 0; j < adjacencyMatrix.length; j++)
                 edgeWageSum += matrix[j];
 
         edgeWageSum /= 2;
-
     }
-
     private void generatePeople(long seedForHabitats, int minimalNumberOfHabitats, int maximumNumberOfHabitats, int graphSize, int infectingParameter)
     {
         Random random = new Random(seedForHabitats);
@@ -79,7 +84,7 @@ public class GraphImpl implements Graph {
             n.updateIllnessCases(iterationNumber);
 
         //zmiana wartosci adjacencyMatrix
-        adjacencyMatrix = ModelGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
+        adjacencyMatrix = AdjacencyMatrixGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
     }
 
     public int getWage(int firstNodeId, int secondNodeId)
@@ -126,7 +131,7 @@ public class GraphImpl implements Graph {
 
         Collections.shuffle(pathNodes);
 
-        GraphPathImpl graphPath = new GraphPathImpl(adjacencyMatrix);
+        GraphPathImpl graphPath = new GraphPathImpl();
 
         for(int i = 0; i < pathNodes.size(); i++)
             graphPath.addToPath(pathNodes.get(i), i != 0 ? getWage(pathNodes.get(i).getId(), graphPath.getLastNode().getId()) : 0);
