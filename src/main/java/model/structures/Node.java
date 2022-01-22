@@ -39,6 +39,11 @@ public class Node {
         healthyNumber = residentsNumber - illnessCases;
     }
 
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
     public int getId()
     {
         return id;
