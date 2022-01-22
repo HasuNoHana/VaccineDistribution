@@ -2,6 +2,7 @@ package model.structures;
 
 import model.generator.ModelGenerator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -26,6 +27,25 @@ public class GraphImpl implements Graph {
     {
         this.adjacencyMatrix = adjacencyMatrix;
         this.nodes = nodes;
+    }
+
+    public GraphImpl(ArrayList<Node> nodeArrayList, int[][] adjacencyMatrix)
+    {
+        this.adjacencyMatrix = adjacencyMatrix;
+        graphSize = nodeArrayList.size();
+
+        nodes = new HashMap<>();
+        edgeWageSum = 0;
+
+        for(Node node : nodeArrayList)
+            nodes.put(node.getId(), node);
+
+        for (int[] matrix : adjacencyMatrix)
+            for (int j = 0; j < adjacencyMatrix.length; j++)
+                edgeWageSum += matrix[j];
+
+        edgeWageSum /= 2;
+
     }
 
     private void generatePeople(long seedForHabitats, int minimalNumberOfHabitats, int maximumNumberOfHabitats, int graphSize, int infectingParameter)
