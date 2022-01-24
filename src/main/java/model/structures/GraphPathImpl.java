@@ -122,6 +122,12 @@ public class GraphPathImpl implements GraphPath {
     }
 
     @Override
+    public void removeFirstNode() {
+        path.remove(0);
+        wages.remove(0);
+    }
+
+    @Override
     public int getFirstEdge() {
         return wages.get(0);
     }
