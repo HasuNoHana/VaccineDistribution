@@ -60,7 +60,7 @@ public class GraphImpl implements Graph {
                 edgeWageSum += matrix[j];
 
         edgeWageSum /= 2;
-        randomForAdjacencyMatrix = new Random(); //TODO check what value should be used here
+        randomForAdjacencyMatrix = new Random(defaultSeedForWages); //TODO check what value should be used here
 
 
     }
