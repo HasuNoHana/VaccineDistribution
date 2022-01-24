@@ -32,7 +32,7 @@ public class SimulatedAnnealing {
         int swapedPathCost = costFunction.evaluate(swapedPath);
         int currentPathCost = costFunction.evaluate(currentPath);
 
-        if (swapedPathCost > currentPathCost) {
+        if (swapedPathCost < currentPathCost) {
             currentPath = swapedPath;
         } else {
             double p = Math.random();
