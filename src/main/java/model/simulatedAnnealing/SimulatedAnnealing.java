@@ -51,7 +51,7 @@ public class SimulatedAnnealing {
             currentPath = swapedPath;
         } else {
             double p = Math.random();
-            if (p > Math.exp(-(swapedPathCost - currentPathCost) / temperature)) {
+            if (p < Math.exp(-(swapedPathCost - currentPathCost) / temperature)) {
                 currentPath = swapedPath;
             }
         }

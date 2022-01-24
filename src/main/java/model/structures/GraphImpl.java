@@ -16,6 +16,7 @@ public class GraphImpl implements Graph {
     private int graphSize;
     private int iterationStep;
     private final long defaultSeedForWages = 8064995938733697569L;
+    private boolean wagesAreNotChanging = false;
 
     public GraphImpl(long seedForWages, long seedForHabitats, int edgeWageSum, int minimalNumberOfHabitats, int maximumNumberOfHabitats, int graphSize, int infectingParameter)
     {
@@ -77,14 +78,15 @@ public class GraphImpl implements Graph {
         }
     }
 
-    public void nextStep(int iterationNumber)
-    {
+    public void nextStep(int iterationNumber) {
         //aktualizacja zarazonych w nodach
-        for(Node n : nodes.values())
+        for (Node n : nodes.values())
             n.updateIllnessCases(iterationNumber);
 
         //zmiana wartosci adjacencyMatrix
-        adjacencyMatrix = AdjacencyMatrixGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
+        if (this.wagesAreNotChanging) {
+            adjacencyMatrix = AdjacencyMatrixGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
+        }
     }
 
     public int getWage(int firstNodeId, int secondNodeId)
