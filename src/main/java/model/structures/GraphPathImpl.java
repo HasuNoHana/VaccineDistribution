@@ -10,22 +10,19 @@ public class GraphPathImpl implements GraphPath {
     private ArrayList<Node> path;
     private int sumOfWages;
     private ArrayList<Integer> wages;
-    private int[][] adjacencyMatrix;
+
+    /*public GraphPathImpl() {
+        this(null); //TODO fix this
+    }*/
 
     public GraphPathImpl() {
-        this(null); //TODO fix this
-    }
-
-    public GraphPathImpl(int[][] adjacencyMatrix) {
         path = new ArrayList<>();
         wages = new ArrayList<>();
         sumOfWages = 0;
-        this.adjacencyMatrix = adjacencyMatrix;
     }
 
     private GraphPathImpl(int[][] adjacencyMatrix, int sumOfWages, ArrayList<Integer> wages, ArrayList<Node> path)
     {
-        this.adjacencyMatrix = adjacencyMatrix;
         this.sumOfWages = sumOfWages;
         this.wages = wages;
         this.path = path;
@@ -70,7 +67,7 @@ public class GraphPathImpl implements GraphPath {
         return n;
     }
 
-    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) {
+    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2, int[][] adjacencyMatrix) {
 
         ArrayList<Node> nodeArrayList = new ArrayList<>();
 

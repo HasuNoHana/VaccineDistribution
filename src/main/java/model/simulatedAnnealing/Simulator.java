@@ -1,9 +1,6 @@
 package model.simulatedAnnealing;
 
-import model.structures.Graph;
-import model.structures.GraphPath;
-import model.structures.GraphPathImpl;
-import model.structures.Node;
+import model.structures.*;
 
 
 public class Simulator {
@@ -22,8 +19,10 @@ public class Simulator {
         GraphPath currentPath = graph.getRandomPath(); //TODO first node of this path cant be changed during simulation. It should be chosen use some heuristic e.g. node with lowest edge wage in whole graph
         optimalPath.addToPath(currentPath.getFirstNode());
 
+        graph = graph.getUpdatedGraphWithoutNode(currentPath.getFirstNode());
+
         while (!stopSimulation(currentPath)) {
-            currentPath = simulatedAnnealing.findShortestCicle(currentPath);
+            currentPath = simulatedAnnealing.findShortestCicle(currentPath, ((GraphImpl) graph).getAdjacencyMatrix());
 
             optimalPath.addToPath(currentPath.getSecondNode(), currentPath.getFirstEdge());
 

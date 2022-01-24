@@ -32,7 +32,7 @@ public class SimulatorTest {
 
 
         GraphImpl graph = (GraphImpl) graphFactory.build();
-        GraphPathImpl simpleGraphPath = new GraphPathImpl(graph.getAdjacencyMatrix()); //TODO this constructor should be removed
+        GraphPathImpl simpleGraphPath = new GraphPathImpl(); //TODO this constructor should be removed
         simpleGraphPath.addToPath(node0);
         simpleGraphPath.addToPath(node1, edgeWeight01);
         simpleGraphPath.addToPath(node2, edgeWeight12);
@@ -73,7 +73,7 @@ public class SimulatorTest {
         int kmax = 100;
         CostFunction costFunction = new CostFunctionGraphWages();
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, kmax);
-        simulatedAnnealing.findShortestCicle(simpleGraphPath);
+//        simulatedAnnealing.findShortestCicle(simpleGraphPath);
 
         //when
         ///SimulationResult simulationResult = simulator.simulate();

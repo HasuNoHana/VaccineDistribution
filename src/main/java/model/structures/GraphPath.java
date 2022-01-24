@@ -9,7 +9,7 @@ public interface GraphPath {
 
     Node getRandomNodeDifferentThat(int nodeId1);
 
-    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2);
+    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2, int[][] adjacencyMatrix);
 
     int getSumOfWages();
 

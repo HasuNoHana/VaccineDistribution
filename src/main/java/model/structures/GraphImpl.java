@@ -131,7 +131,7 @@ public class GraphImpl implements Graph {
 
         Collections.shuffle(pathNodes);
 
-        GraphPathImpl graphPath = new GraphPathImpl(adjacencyMatrix);
+        GraphPathImpl graphPath = new GraphPathImpl();
 
         for(int i = 0; i < pathNodes.size(); i++)
             graphPath.addToPath(pathNodes.get(i), i != 0 ? getWage(pathNodes.get(i).getId(), graphPath.getLastNode().getId()) : 0);
