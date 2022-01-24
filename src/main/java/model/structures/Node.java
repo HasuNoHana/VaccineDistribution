@@ -17,6 +17,7 @@ public class Node {
         this.healthyNumber = residentsNumber - illnessCases;
         this.infectingParameter = infectingParameter;
         this.isVaccinated = false;
+        this.id = id;
         updateIllnessCases(0);
     }
 

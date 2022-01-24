@@ -12,14 +12,14 @@ public class AdjacencyMatrixGenerator {
         if(edgeWageSum < edgesNumber)
             return null;
 
-        int[][] adjacencyMatrix = new int[edgesNumber][edgesNumber];
+        int[][] adjacencyMatrix = new int[nodesNumber][nodesNumber];
 
         //setting 0 value in the matrix diagonal
 
         for(int i = 0; i < adjacencyMatrix.length; i++)
             adjacencyMatrix[i][i] = 0;
 
-        int valuesQuantity = edgesNumber * (edgesNumber - 1);
+        int valuesQuantity = nodesNumber * (nodesNumber - 1);
         valuesQuantity = (int) Math.ceil((float) valuesQuantity / 2);
 
         int[] values = new int[valuesQuantity];

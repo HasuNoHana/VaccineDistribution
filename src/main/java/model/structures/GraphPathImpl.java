@@ -14,7 +14,7 @@ public class GraphPathImpl implements GraphPath {
 
     private ArrayList<Node> path;
     private ArrayList<Integer> weights;
-
+    private static Random random = new Random(8064995938733697569L);
     public GraphPathImpl() {
         path = new ArrayList<>();
         weights = new ArrayList<>();
@@ -54,7 +54,7 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public Node getRandomNode() {
-        Random random = new Random();
+        //Random random = new Random();
 
         int positionInPath = Math.max(1, random.nextInt(path.size()));
 
