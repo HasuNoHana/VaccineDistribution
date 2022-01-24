@@ -73,7 +73,7 @@ public class SimulatorTest {
         int kmax = 100;
         CostFunction costFunction = new CostFunctionGraphWages();
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, kmax);
-//        simulatedAnnealing.findShortestCicle(simpleGraphPath);
+//        simulatedAnnealing.findOptimaPath(simpleGraphPath);
 
         //when
         ///SimulationResult simulationResult = simulator.simulate();

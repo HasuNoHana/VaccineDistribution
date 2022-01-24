@@ -26,7 +26,7 @@ public class Simulator {
         graph = graph.getUpdatedGraphWithoutNode(currentPath.getFirstNode());
 
         while (!stopSimulation(currentPath)) {
-            currentPath = simulatedAnnealing.findShortestCicle(currentPath, ((GraphImpl) graph).getAdjacencyMatrix());
+            currentPath = simulatedAnnealing.findOptimaPath(currentPath, ((GraphImpl) graph).getAdjacencyMatrix());
 
             optimalPath.addToPath(currentPath.getSecondNode(), currentPath.getFirstEdge());
             logger.info("Optimal path is {}", optimalPath);
