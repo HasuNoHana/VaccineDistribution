@@ -15,8 +15,14 @@ public class SimulatedAnnealing {
         this.kmax = kmax;
     }
 
-
-    public GraphPath findShortestCicle(GraphPath pathFromPreviousStep, int[][] wageMatrix) {
+    /**
+     * Finds (semi) optimal path using simulated annealing algorithm.
+     *
+     * @param pathFromPreviousStep path to start optimization with. If graph don't change it should return same path
+     * @param wageMatrix
+     * @return optimal path
+     */
+    public GraphPath findOptimaPath(GraphPath pathFromPreviousStep, int[][] wageMatrix) {
         GraphPath currentPath = pathFromPreviousStep;
 
         double temperature;
@@ -34,9 +40,11 @@ public class SimulatedAnnealing {
 
         GraphPath swapedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2, wageMatrix);
         int currentPathCost = costFunction.evaluate(currentPath);
+        logger.debug("Current path is {}", currentPath);
         logger.debug("Current cost function is {}", currentPathCost);
 
         int swapedPathCost = costFunction.evaluate(swapedPath);
+        logger.debug("Swapped path is {}", swapedPath);
         logger.debug("New cost function is {}", swapedPathCost);
 
         if (swapedPathCost < currentPathCost) {
