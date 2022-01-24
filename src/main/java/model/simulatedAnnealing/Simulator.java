@@ -8,7 +8,7 @@ import model.structures.Node;
 
 public class Simulator {
 
-    private final Graph graph;
+    private Graph graph;
     private final SimulatedAnnealing simulatedAnnealing;
     private GraphPath optimalPath = new GraphPathImpl();
 
@@ -29,6 +29,8 @@ public class Simulator {
 
             Node removedNode = currentPath.getFirstNode();
             Graph currentGraph = graph.getUpdatedGraphWithoutNode(removedNode);
+            graph = currentGraph;
+            currentPath.removeFirstNode();
         }
         return new SimulationResult(optimalPath);
     }

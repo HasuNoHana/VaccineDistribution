@@ -20,4 +20,6 @@ public interface GraphPath {
     Node getSecondNode();
 
     int getFirstEdge();
+
+    void removeFirstNode();
 }
