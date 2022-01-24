@@ -26,4 +26,6 @@ public interface GraphPath {
     int getLastEdge();
 
     Node getLastNode();
+
+    int getIllsCost();
 }
