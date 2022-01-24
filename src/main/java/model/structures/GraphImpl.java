@@ -1,6 +1,6 @@
 package model.structures;
 
-import model.generator.ModelGenerator;
+import model.generator.AdjacencyMatrixGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class GraphImpl implements Graph {
         this.graphSize = graphSize;
         this.edgeWageSum = edgeWageSum;
         randomForAdjacencyMatrix = new Random(seedForWages);
-        adjacencyMatrix = ModelGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
+        adjacencyMatrix = AdjacencyMatrixGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
         generatePeople(seedForHabitats, minimalNumberOfHabitats, maximumNumberOfHabitats, graphSize, infectingParameter);
         iterationStep = 0;
     }
@@ -84,7 +84,7 @@ public class GraphImpl implements Graph {
             n.updateIllnessCases(iterationNumber);
 
         //zmiana wartosci adjacencyMatrix
-        adjacencyMatrix = ModelGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
+        adjacencyMatrix = AdjacencyMatrixGenerator.generateAdjacencyMatrix(graphSize, edgeWageSum, randomForAdjacencyMatrix);
     }
 
     public int getWage(int firstNodeId, int secondNodeId)
