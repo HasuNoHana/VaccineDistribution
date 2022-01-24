@@ -1,11 +1,16 @@
 package model.structures;
 
+import model.simulatedAnnealing.Simulator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 public class GraphPathImpl implements GraphPath {
+    final static Logger logger = LoggerFactory.getLogger(Simulator.class);
 
     private ArrayList<Node> path;
     private int sumOfWages;
@@ -40,11 +45,19 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public void addToPath(Node node) {
+//        logger.debug("Adding following node to path {}", node);
         addToPath(node, 0);
     }
 
     public ArrayList<Node> getPath() {
         return path;
+    }
+
+    @Override
+    public String toString() {
+        return "GraphPathImpl{" +
+                "path=" + path +
+                '}';
     }
 
     @Override
@@ -131,6 +144,14 @@ public class GraphPathImpl implements GraphPath {
 
     public Node getLastNode() {
         return path.get(path.size() - 1);
+    }
+
+    @Override
+    public int getLastEdge() {
+        if (wages.size() > 1) {
+            throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
+        }
+        return wages.get(0);
     }
 
     public int getWageOfNode(Node n) {

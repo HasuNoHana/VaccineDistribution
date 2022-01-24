@@ -22,4 +22,8 @@ public interface GraphPath {
     int getFirstEdge();
 
     void removeFirstNode();
+
+    int getLastEdge();
+
+    Node getLastNode();
 }

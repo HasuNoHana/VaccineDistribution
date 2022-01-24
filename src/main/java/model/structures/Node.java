@@ -109,7 +109,14 @@ public class Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return residentsNumber == node.residentsNumber && illnessCases == node.illnessCases && healthyNumber == node.healthyNumber && isVaccinated == node.isVaccinated && infectingParameter == node.infectingParameter  && id == node.id && visitIteration == node.visitIteration;
+        return residentsNumber == node.residentsNumber && illnessCases == node.illnessCases && healthyNumber == node.healthyNumber && isVaccinated == node.isVaccinated && infectingParameter == node.infectingParameter && id == node.id && visitIteration == node.visitIteration;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id=" + id +
+                '}';
     }
 
     @Override

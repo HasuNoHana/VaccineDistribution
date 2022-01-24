@@ -1,8 +1,12 @@
 package model.simulatedAnnealing;
 
 import model.structures.GraphPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimulatedAnnealing {
+    final static Logger logger = LoggerFactory.getLogger(Simulator.class);
+
     private final CostFunction costFunction;
     private final int kmax;
 
@@ -18,7 +22,7 @@ public class SimulatedAnnealing {
         double temperature;
         for (int k = 0; k < kmax; k++) {
             temperature = (1.0 - (k + 1.0) / kmax);
-            currentPath = doOneStepOfSimulatedAnnealing(currentPath,temperature, wageMatrix);
+            currentPath = doOneStepOfSimulatedAnnealing(currentPath, temperature, wageMatrix);
         }
 
         return currentPath;
@@ -29,8 +33,11 @@ public class SimulatedAnnealing {
         int nodeId2 = currentPath.getRandomNodeDifferentThat(nodeId1).getId();
 
         GraphPath swapedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2, wageMatrix);
-        int swapedPathCost = costFunction.evaluate(swapedPath);
         int currentPathCost = costFunction.evaluate(currentPath);
+        logger.debug("Current cost function is {}", currentPathCost);
+
+        int swapedPathCost = costFunction.evaluate(swapedPath);
+        logger.debug("New cost function is {}", swapedPathCost);
 
         if (swapedPathCost < currentPathCost) {
             currentPath = swapedPath;
