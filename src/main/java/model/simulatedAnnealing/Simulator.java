@@ -1,11 +1,11 @@
 package model.simulatedAnnealing;
 
 import model.structures.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static model.simulatedAnnealing.SimulatedAnnealing.logger;
+
 
 public class Simulator {
-    final static Logger logger = LoggerFactory.getLogger(Simulator.class);
 
     private Graph graph;
     private final SimulatedAnnealing simulatedAnnealing;

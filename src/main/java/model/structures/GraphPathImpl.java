@@ -13,34 +13,26 @@ public class GraphPathImpl implements GraphPath {
     final static Logger logger = LoggerFactory.getLogger(Simulator.class);
 
     private ArrayList<Node> path;
-    private int sumOfWages;
-    private ArrayList<Integer> wages;
-
-    /*public GraphPathImpl() {
-        this(null); //TODO fix this
-    }*/
+    private ArrayList<Integer> weights;
 
     public GraphPathImpl() {
         path = new ArrayList<>();
-        wages = new ArrayList<>();
-        sumOfWages = 0;
+        weights = new ArrayList<>();
     }
 
-    private GraphPathImpl(int[][] adjacencyMatrix, int sumOfWages, ArrayList<Integer> wages, ArrayList<Node> path)
+    private GraphPathImpl(ArrayList<Integer> weights, ArrayList<Node> path)
     {
-        this.sumOfWages = sumOfWages;
-        this.wages = wages;
+        this.weights = weights;
         this.path = path;
     }
 
     @Override
-    public void addToPath(Node node, int wage) {
+    public void addToPath(Node node, int weight) {
         Node theNewNode = new Node(node);
 
         path.add(theNewNode);
-        if(wage != 0)
-            wages.add(wage);
-        sumOfWages += wage;
+        if(weight != 0)
+            weights.add(weight);
     }
 
     @Override
@@ -108,12 +100,17 @@ public class GraphPathImpl implements GraphPath {
             wages.add(wage);
         }
 
-        return new GraphPathImpl(adjacencyMatrix, sumOfWages, wages, nodeArrayList);
+        return new GraphPathImpl(wages, nodeArrayList);
     }
 
     public int getSumOfWages()
     {
-        return sumOfWages;
+        int sum = 0;
+
+        for(Integer i : weights)
+            sum += i;
+
+        return sum;
     }
 
     @Override
@@ -134,12 +131,12 @@ public class GraphPathImpl implements GraphPath {
     @Override
     public void removeFirstNode() {
         path.remove(0);
-        wages.remove(0);
+        weights.remove(0);
     }
 
     @Override
     public int getFirstEdge() {
-        return wages.get(0);
+        return weights.get(0);
     }
 
     public Node getLastNode() {
@@ -147,14 +144,21 @@ public class GraphPathImpl implements GraphPath {
     }
 
     @Override
-    public int getLastEdge() {
-        if (wages.size() > 1) {
-            throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
-        }
-        return wages.get(0);
+    public int getIllnessCases() {
+        int illnessCases = 0;
+
+        for(Node n : path)
+            illnessCases += n.getIllnessCases();
+
+        return illnessCases;
     }
 
-    public int getWageOfNode(Node n) {
-        return wages.get(path.indexOf(n));
+    @Override
+    public int getLastEdge() {
+        /*if (weights.size() > 1) {
+            throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
+        }*/
+
+        return weights.get(weights.size() - 1);
     }
 }

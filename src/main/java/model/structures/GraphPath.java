@@ -27,5 +27,5 @@ public interface GraphPath {
 
     Node getLastNode();
 
-    int getIllsCost();
+    int getIllnessCases();
 }

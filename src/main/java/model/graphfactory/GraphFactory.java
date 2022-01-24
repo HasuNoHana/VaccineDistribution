@@ -19,13 +19,18 @@ public class GraphFactory {
         nodeArrayList.add(node);
     }
 
-    public void addWage(int firstNodeId, int secondNodeId, int wage)
+    public void addWeight(int firstNodeId, int secondNodeId, int weight)
     {
         if(adjacencyMatrix == null)
             adjacencyMatrix = new int[nodeArrayList.size()][nodeArrayList.size()];
 
-        adjacencyMatrix[firstNodeId][secondNodeId] = wage;
-        adjacencyMatrix[secondNodeId][firstNodeId] = wage;
+        adjacencyMatrix[firstNodeId][secondNodeId] = weight;
+        adjacencyMatrix[secondNodeId][firstNodeId] = weight;
+    }
+
+    public void addAdjacencyMatrix(int[][] adjacencyMatrix)
+    {
+        this.adjacencyMatrix = adjacencyMatrix;
     }
 
     public Graph build() {

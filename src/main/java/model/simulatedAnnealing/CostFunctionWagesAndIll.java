@@ -8,6 +8,6 @@ public class CostFunctionWagesAndIll implements CostFunction {
 
     @Override
     public int evaluate(GraphPath graphPath) {
-        return (int) (wagesParameter * graphPath.getSumOfWages() + illParameter * graphPath.getIllsCost());
+        return (int) (wagesParameter * graphPath.getSumOfWages() + illParameter * graphPath.getIllnessCases());
     }
 }

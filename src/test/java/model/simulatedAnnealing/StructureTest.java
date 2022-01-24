@@ -22,12 +22,12 @@ public class StructureTest {
         graphFactory.addNode(node0);
         graphFactory.addNode(node1);
         graphFactory.addNode(node2);
-        graphFactory.addWage(0, 1, edgeWeight01);
-        graphFactory.addWage(1, 2, edgeWeight12);
-        graphFactory.addWage(0, 2, edgeWeight02);
+        graphFactory.addWeight(0, 1, edgeWeight01);
+        graphFactory.addWeight(1, 2, edgeWeight12);
+        graphFactory.addWeight(0, 2, edgeWeight02);
 
         GraphImpl graph = (GraphImpl) graphFactory.build();
-        GraphPathImpl simpleGraphPath = new GraphPathImpl(); //TODO this constructor should be removed
+        GraphPathImpl simpleGraphPath = new GraphPathImpl();
         simpleGraphPath.addToPath(node0);
         simpleGraphPath.addToPath(node1, edgeWeight01);
         simpleGraphPath.addToPath(node2, edgeWeight12);
@@ -35,8 +35,9 @@ public class StructureTest {
         int nodeId1 = 1;
         int nodeId2 = 2;
 
-        GraphPath swapedPath = simpleGraphPath.getCopyWithSwappedNodes(nodeId1, nodeId2, graph.getAdjacencyMatrix());
+        GraphPath swappedPath = simpleGraphPath.getCopyWithSwappedNodes(nodeId1, nodeId2, graph.getAdjacencyMatrix());
 
+        System.out.println("cos");
 //        Assert.assertEquals();
     }
 }
