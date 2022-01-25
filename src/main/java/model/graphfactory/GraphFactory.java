@@ -23,12 +23,6 @@ public class GraphFactory {
         nodeArrayList.add(node);
     }
 
-    public void addWeight(int firstNodeId, int secondNodeId, int weight)
-    {
-        adjacencyMatrix.setEdge(firstNodeId, secondNodeId, weight);
-
-    }
-
     public void setAdjacanceMatrix(int[][] adjacencyMatrix) {
         this.adjacencyMatrix = new AdjacencyMatrix(adjacencyMatrix);
     }
