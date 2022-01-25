@@ -75,12 +75,7 @@ public class GraphPathImpl implements GraphPath {
     }
 
     public int getSumOfWages() {
-        int sum = 0;
-
-        for (Integer i : weights)
-            sum += i;
-
-        return sum;
+        return weights.stream().mapToInt(Integer::intValue).sum();
     }
 
     @Override
