@@ -19,26 +19,25 @@ public class SimulatedAnnealing {
      * Finds (semi) optimal path using simulated annealing algorithm.
      *
      * @param pathFromPreviousStep path to start optimization with. If graph don't change it should return same path
-     * @param wageMatrix
      * @return optimal path
      */
-    public GraphPath findOptimaPath(GraphPath pathFromPreviousStep, int[][] wageMatrix) {
+    public GraphPath findOptimaPath(GraphPath pathFromPreviousStep) {
         GraphPath currentPath = pathFromPreviousStep;
 
         double temperature;
         for (int k = 0; k < kmax; k++) {
             temperature = (1.0 - (k + 1.0) / kmax);
-            currentPath = doOneStepOfSimulatedAnnealing(currentPath, temperature, wageMatrix);
+            currentPath = doOneStepOfSimulatedAnnealing(currentPath, temperature);
         }
 
         return currentPath;
     }
 
-    private GraphPath doOneStepOfSimulatedAnnealing(GraphPath currentPath, double temperature, int[][] wageMatrix) {
+    private GraphPath doOneStepOfSimulatedAnnealing(GraphPath currentPath, double temperature) {
         int nodeId1 = currentPath.getRandomNode().getId();
         int nodeId2 = currentPath.getRandomNodeDifferentThat(nodeId1).getId();
 
-        GraphPath swapedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2, wageMatrix);
+        GraphPath swapedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2);
         int currentPathCost = costFunction.evaluate(currentPath);
         logger.debug("Current path is {}", currentPath);
         logger.debug("Current cost function is {}", currentPathCost);

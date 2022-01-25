@@ -1,5 +1,7 @@
 package model.structures;
 
+import java.util.List;
+
 public interface GraphPath {
     void addToPath(Node node, int wage);
 
@@ -9,7 +11,7 @@ public interface GraphPath {
 
     Node getRandomNodeDifferentThat(int nodeId1);
 
-    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2, int[][] adjacencyMatrix);
+    GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2);
 
     int getSumOfWages();
 
@@ -28,4 +30,6 @@ public interface GraphPath {
     Node getLastNode();
 
     int getIllnessCases();
+
+    List<Node> getPath();
 }

@@ -1,6 +1,9 @@
 package model.simulatedAnnealing;
 
-import model.structures.*;
+import model.structures.Graph;
+import model.structures.GraphPath;
+import model.structures.GraphPathImpl;
+import model.structures.Node;
 
 import static model.simulatedAnnealing.SimulatedAnnealing.logger;
 
@@ -9,11 +12,12 @@ public class Simulator {
 
     private Graph graph;
     private final SimulatedAnnealing simulatedAnnealing;
-    private GraphPath optimalPath = new GraphPathImpl();
+    private final GraphPath optimalPath;
 
     public Simulator(Graph graph, SimulatedAnnealing simulatedAnnealing) {
         this.graph= graph;
         this.simulatedAnnealing = simulatedAnnealing;
+        this.optimalPath = new GraphPathImpl(graph);
     }
 
     public SimulationResult simulate() {
@@ -26,7 +30,7 @@ public class Simulator {
         graph = graph.getUpdatedGraphWithoutNode(currentPath.getFirstNode());
 
         while (!stopSimulation(currentPath)) {
-            currentPath = simulatedAnnealing.findOptimaPath(currentPath, ((GraphImpl) graph).getAdjacencyMatrix());
+            currentPath = simulatedAnnealing.findOptimaPath(currentPath);
 
             optimalPath.addToPath(currentPath.getSecondNode(), currentPath.getFirstEdge());
             logger.info("Optimal path is {}", optimalPath);

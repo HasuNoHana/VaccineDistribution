@@ -5,25 +5,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class GraphPathImpl implements GraphPath {
     final static Logger logger = LoggerFactory.getLogger(Simulator.class);
+    private Graph graph;
 
     private ArrayList<Node> path;
     private ArrayList<Integer> weights;
 
-    public GraphPathImpl() {
+    public GraphPathImpl(Graph graph) {
         path = new ArrayList<>();
         weights = new ArrayList<>();
+        this.graph = graph;
     }
 
-    private GraphPathImpl(ArrayList<Integer> weights, ArrayList<Node> path)
-    {
+    public GraphPathImpl(Graph graph, ArrayList<Integer> weights, ArrayList<Node> path) {
         this.weights = weights;
         this.path = path;
+        this.graph = graph;
     }
 
     @Override
@@ -37,12 +38,7 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public void addToPath(Node node) {
-//        logger.debug("Adding following node to path {}", node);
         addToPath(node, 0);
-    }
-
-    public ArrayList<Node> getPath() {
-        return path;
     }
 
     @Override
@@ -66,48 +62,22 @@ public class GraphPathImpl implements GraphPath {
 
         Node n = getRandomNode();
 
-        if(n.getId() == nodeId)
+        if (n.getId() == nodeId)
             return getRandomNodeDifferentThat(nodeId);
 
         return n;
     }
 
-    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2, int[][] adjacencyMatrix) {
+    @Override
+    public GraphPath getCopyWithSwappedNodes(int nodeId1, int nodeId2) {
+        return graph.getPathWithSwappedNodes(this, nodeId1, nodeId2);
 
-        ArrayList<Node> nodeArrayList = new ArrayList<>();
-
-        for (Node n : path)
-            nodeArrayList.add(new Node(n));
-
-        ArrayList<Node> nodesToSwap = nodeArrayList.
-                stream().
-                filter(n -> n.getId() == nodeId1 || n.getId() == nodeId2).
-                collect(Collectors.toCollection(ArrayList::new));
-
-        if(nodeArrayList.indexOf(nodesToSwap.get(0)) == 0 || nodeArrayList.indexOf(nodesToSwap.get(1)) == 0)
-            throw new RuntimeException("TODO POPRAW MNIE PATRYK!"); //xdddddddddd
-
-        if(nodesToSwap.size() == 2)
-            Collections.swap(nodeArrayList, nodeArrayList.indexOf(nodesToSwap.get(0)), nodeArrayList.indexOf(nodesToSwap.get(1)));
-
-        int sumOfWages = 0;
-        ArrayList<Integer> wages = new ArrayList<>();
-
-        for (int i = 1; i < nodeArrayList.size(); i++)
-        {
-            int wage = adjacencyMatrix[nodeArrayList.get(i).getId()][nodeArrayList.get(i - 1).getId()];
-            sumOfWages += wage;
-            wages.add(wage);
-        }
-
-        return new GraphPathImpl(wages, nodeArrayList);
     }
 
-    public int getSumOfWages()
-    {
+    public int getSumOfWages() {
         int sum = 0;
 
-        for(Integer i : weights)
+        for (Integer i : weights)
             sum += i;
 
         return sum;
@@ -147,17 +117,22 @@ public class GraphPathImpl implements GraphPath {
     public int getIllnessCases() {
         int illnessCases = 0;
 
-        for(Node n : path)
+        for (Node n : path)
             illnessCases += n.getIllnessCases();
 
         return illnessCases;
     }
 
     @Override
+    public List<Node> getPath() {
+        return path;
+    }
+
+    @Override
     public int getLastEdge() {
-        /*if (weights.size() > 1) {
+        if (weights.size() > 1) {
             throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
-        }*/
+        }
 
         return weights.get(weights.size() - 1);
     }

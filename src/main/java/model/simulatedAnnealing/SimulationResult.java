@@ -3,8 +3,6 @@ package model.simulatedAnnealing;
 import model.structures.GraphPath;
 
 public class SimulationResult {
-    public SimulationResult() { //TODO this should work. This costructor should be removed
-    }
 
     //TODO Powinno zawierac jakies info o tym ile ludzi zachorowalo itp
     private GraphPath optimalPath;

@@ -5,8 +5,11 @@ public interface Graph {
 
     /**
      * Returns graph G` with updated edges and number of ill people per node. G` should have one node less (nodeToBeRemoved).
+     *
      * @param nodeToBeRemoved node to be removed
      * @return updated Graph
      */
     Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved);
+
+    GraphPath getPathWithSwappedNodes(GraphPath graphPath, int nodeId1, int nodeId2);
 }
