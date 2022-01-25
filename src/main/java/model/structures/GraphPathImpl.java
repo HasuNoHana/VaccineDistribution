@@ -7,38 +7,30 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class GraphPathImpl implements GraphPath {
     final static Logger logger = LoggerFactory.getLogger(Simulator.class);
     private Graph graph;
 
     private ArrayList<Node> path;
-    private ArrayList<Integer> weights;
 
     public GraphPathImpl(Graph graph) {
         path = new ArrayList<>();
-        weights = new ArrayList<>();
         this.graph = graph;
     }
 
     public GraphPathImpl(Graph graph, ArrayList<Integer> weights, ArrayList<Node> path) {
-        this.weights = weights;
         this.path = path;
         this.graph = graph;
     }
 
     @Override
-    public void addToPath(Node node, int weight) {
+    public void addToPath(Node node) {
         Node theNewNode = new Node(node);
 
         path.add(theNewNode);
-        if(weight != 0)
-            weights.add(weight);
-    }
 
-    @Override
-    public void addToPath(Node node) {
-        addToPath(node, 0);
     }
 
     @Override
@@ -75,7 +67,11 @@ public class GraphPathImpl implements GraphPath {
     }
 
     public int getSumOfWages() {
-        return weights.stream().mapToInt(Integer::intValue).sum();
+        return this.graph.getEdgeSumForNodeIdList(this.getNodeIds());
+    }
+
+    private List<Integer> getNodeIds() {
+        return path.stream().map(Node::getId).collect(Collectors.toList());
     }
 
     @Override
@@ -96,12 +92,11 @@ public class GraphPathImpl implements GraphPath {
     @Override
     public void removeFirstNode() {
         path.remove(0);
-        weights.remove(0);
     }
 
     @Override
     public int getFirstEdge() {
-        return weights.get(0);
+        return graph.getEdgeBeetwenNodes(path.get(0), path.get(1));
     }
 
     public Node getLastNode() {
@@ -124,11 +119,21 @@ public class GraphPathImpl implements GraphPath {
     }
 
     @Override
+    public void updateGraph(Graph graph) {
+        this.graph = graph;
+    }
+
+    @Override
+    public int getEdgeBetweenNodes(Node node1, Node node2) {
+        return this.graph.getEdgeBeetwenNodes(node1, node2);
+    }
+
+    @Override
     public int getLastEdge() {
-        if (weights.size() > 1) {
+        if (path.size() > 2) {
             throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
         }
 
-        return weights.get(weights.size() - 1);
+        return graph.getEdgeBeetwenNodes(path.get(path.size() - 2), path.get(path.size() - 1)); //TODO test this
     }
 }

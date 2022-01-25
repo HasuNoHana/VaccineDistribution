@@ -1,22 +1,28 @@
 package model.structures;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static model.structures.GraphPathImpl.logger;
 
 public class GraphImpl implements Graph {
 
     private final HashMap<Integer, Node> nodes;
-    private final AdjacencyMatrix adjacencyMatrix;
-    private final Random randomForAdjacencyMatrix;
-    private final long defaultSeedForWages = 8064995938733697569L;
+    private AdjacencyMatrix adjacencyMatrix;
+    private int iterationStep;
+    private EdgesChangeStrategy edgesChangeStrategy;
 
-    private GraphImpl(AdjacencyMatrix adjacencyMatrix, HashMap<Integer, Node> nodes) {
+    private GraphImpl(AdjacencyMatrix adjacencyMatrix, HashMap<Integer, Node> nodes, EdgesChangeStrategy edgesChangeStrategy) {
         this.adjacencyMatrix = adjacencyMatrix;
         this.nodes = nodes;
-        randomForAdjacencyMatrix = new Random();
+        this.iterationStep = 0;
+        this.edgesChangeStrategy = edgesChangeStrategy;
     }
 
-    public GraphImpl(List<Node> nodeArrayList, AdjacencyMatrix adjacencyMatrix) {
+    public GraphImpl(List<Node> nodeArrayList, AdjacencyMatrix adjacencyMatrix, EdgesChangeStrategy edgesChangeStrategy) {
         this.adjacencyMatrix = adjacencyMatrix;
 
         nodes = new HashMap<>();
@@ -24,9 +30,8 @@ public class GraphImpl implements Graph {
         for (Node node : nodeArrayList)
             nodes.put(node.getId(), node);
 
-        randomForAdjacencyMatrix = new Random(defaultSeedForWages); //TODO check what value should be used here
-
-
+        this.iterationStep = 0;
+        this.edgesChangeStrategy = edgesChangeStrategy;
     }
 
     @Override
@@ -60,6 +65,22 @@ public class GraphImpl implements Graph {
         };
     }
 
+    @Override
+    public int getEdgeSumForNodeIdList(List<Integer> graphPath) {
+        int sum = 0;
+        for (int i = 0; i < graphPath.size() - 1; i++) {
+            Integer firstNodeId = graphPath.get(i);
+            Integer secondNodeId = graphPath.get(i + 1);
+            sum += adjacencyMatrix.getEdgeWeight(firstNodeId, secondNodeId);
+        }
+        return sum;
+    }
+
+    @Override
+    public int getEdgeBeetwenNodes(Node node, Node node1) {
+        return adjacencyMatrix.getEdgeWeight(node.getId(), node1.getId());
+    }
+
     public int getWage(int firstNodeId, int secondNodeId) {
         return adjacencyMatrix.getEdgeWeight(firstNodeId, secondNodeId);
     }
@@ -73,7 +94,7 @@ public class GraphImpl implements Graph {
             }
         }
 
-        return new GraphImpl(adjacencyMatrix, subgraphNodes);
+        return new GraphImpl(adjacencyMatrix, subgraphNodes, this.edgesChangeStrategy);
     }
 
     @Override
@@ -89,14 +110,15 @@ public class GraphImpl implements Graph {
         GraphPathImpl graphPath = new GraphPathImpl(this);
 
         for (int i = 0; i < pathNodes.size(); i++)
-            graphPath.addToPath(pathNodes.get(i), i != 0 ? getWage(pathNodes.get(i).getId(), graphPath.getLastNode().getId()) : 0);
+            graphPath.addToPath(pathNodes.get(i));
 
         return graphPath;
     }
 
     @Override
     public Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved) {
-
+        this.adjacencyMatrix = this.edgesChangeStrategy.updateEdges(this.adjacencyMatrix);
+        logger.info("Updating Matrix to " + this.adjacencyMatrix);
         return getSubgraphWithUnvisitedNodes();
     }
 }

@@ -1,5 +1,7 @@
 package model.structures;
 
+import java.util.List;
+
 public interface Graph {
     GraphPath getRandomPath();
 
@@ -12,4 +14,8 @@ public interface Graph {
     Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved);
 
     GraphPath getPathWithSwappedNodes(GraphPath graphPath, int nodeId1, int nodeId2);
+
+    int getEdgeSumForNodeIdList(List<Integer> graphPath);
+
+    int getEdgeBeetwenNodes(Node node, Node node1);
 }

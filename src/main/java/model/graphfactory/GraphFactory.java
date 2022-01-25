@@ -1,9 +1,6 @@
 package model.graphfactory;
 
-import model.structures.AdjacencyMatrix;
-import model.structures.Graph;
-import model.structures.GraphImpl;
-import model.structures.Node;
+import model.structures.*;
 
 import java.util.ArrayList;
 
@@ -11,9 +8,11 @@ public class GraphFactory {
 
     private AdjacencyMatrix adjacencyMatrix;
     private ArrayList<Node> nodeArrayList;
+    private EdgesChangeStrategy edgesChangeStrategy;
 
-    public GraphFactory() {
+    public GraphFactory(long wagesSeed) {
         adjacencyMatrix = new AdjacencyMatrix();
+        edgesChangeStrategy = new ConstantSumOfEdgesStrategy(wagesSeed);
     }
 
     public void addNode(Node node) {
@@ -28,6 +27,6 @@ public class GraphFactory {
     }
 
     public Graph build() {
-        return new GraphImpl(nodeArrayList, adjacencyMatrix);
+        return new GraphImpl(nodeArrayList, adjacencyMatrix, edgesChangeStrategy);
     }
 }

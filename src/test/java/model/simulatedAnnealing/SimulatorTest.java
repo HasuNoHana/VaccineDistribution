@@ -1,17 +1,14 @@
 package model.simulatedAnnealing;
 
 import model.GraphTestHelper;
-import model.graphfactory.GraphFactory;
-import model.structures.GraphImpl;
-import model.structures.GraphPath;
-import model.structures.GraphPathImpl;
-import model.structures.Node;
+import model.structures.*;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 public class SimulatorTest extends GraphTestHelper {
@@ -19,14 +16,61 @@ public class SimulatorTest extends GraphTestHelper {
     public static final int KMAX = 100;
 
     @Test
-    public void shouldFindOptimalPathInSimpleGraph() {
+    public void shouldFindOptimalPathInDynamicGraph() {
 //        given
-        GraphImpl graph = getGraph();
-        GraphPathImpl simpleGraphPath = new GraphPathImpl(graph);
-        simpleGraphPath.addToPath(NODE_0);
-        simpleGraphPath.addToPath(NODE_2, EDGE_WEIGHT_02);
-        simpleGraphPath.addToPath(NODE_1, EDGE_WEIGHT_12);
-        simpleGraphPath.addToPath(NODE_3, EDGE_WEIGHT_13);
+        List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
+        AdjacencyMatrix beforeAdjactiveMatrix = getBeforeAdjactencyMatrix();
+        AdjacencyMatrix afterAdjactiveMatrix = getAfterAdjactencyMatrix();
+
+        EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
+        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjactiveMatrix);
+        GraphImpl graph = new GraphImpl(nodes, beforeAdjactiveMatrix, dummyChangeStrategy);
+
+        GraphPathImpl beforeGraphPath = getSimplePath(graph);
+
+        GraphImpl graphSpyded = Mockito.spy(graph);
+        when(graphSpyded.getRandomPath()).thenReturn(beforeGraphPath);
+
+        CostFunction costFunction = new CostFunctionGraphWages();
+        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
+        Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
+
+        //when
+        SimulationResult simulationResult = simulator.simulate();
+
+        //then
+        PathHistory optimalPath = simulationResult.getOptimalPath();
+        assertEquals(EDGE_WEIGHT_01 + EDGE_WEIGHT_23 + EDGE_WEIGHT_13_NEW, optimalPath.getSumOfWages());
+        assertEquals(0, optimalPath.getPath().get(0).getId());
+        assertEquals(1, optimalPath.getPath().get(1).getId());
+        assertEquals(3, optimalPath.getPath().get(2).getId());
+        assertEquals(2, optimalPath.getPath().get(3).getId());
+    }
+
+    @Test
+    public void checkIfPathChangesWhenGraphIsChanged() {
+        List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
+        AdjacencyMatrix beforeAdjactiveMatrix = getBeforeAdjactencyMatrix();
+        AdjacencyMatrix afterAdjactiveMatrix = getAfterAdjactencyMatrix();
+
+        EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
+        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjactiveMatrix);
+        GraphImpl graph = new GraphImpl(nodes, beforeAdjactiveMatrix, dummyChangeStrategy);
+
+        GraphPathImpl beforeGraphPath = getSimplePath(graph);
+
+        assertEquals(EDGE_WEIGHT_02 + EDGE_WEIGHT_13 + EDGE_WEIGHT_12, beforeGraphPath.getSumOfWages());
+        //when
+        graph.getUpdatedGraphWithoutNode(NODE_0);
+        //then
+        assertEquals(EDGE_WEIGHT_02 + EDGE_WEIGHT_12_NEW + EDGE_WEIGHT_13_NEW, beforeGraphPath.getSumOfWages());
+    }
+
+    @Test
+    public void shouldFindOptimalPathInStaticGraph() {
+//        given
+        GraphImpl graph = getStaticGraph();
+        GraphPathImpl simpleGraphPath = getSimplePath(graph);
 
         GraphImpl graphSpyded = Mockito.spy(graph);
         when(graphSpyded.getRandomPath()).thenReturn(simpleGraphPath);
@@ -39,36 +83,29 @@ public class SimulatorTest extends GraphTestHelper {
         SimulationResult simulationResult = simulator.simulate();
 
         //then
-        GraphPath optimalPath = simulationResult.getOptimalPath();
+        PathHistory optimalPath = simulationResult.getOptimalPath();
         assertEquals(EDGE_WEIGHT_01 + EDGE_WEIGHT_12 + EDGE_WEIGHT_23, optimalPath.getSumOfWages());
     }
 
     @Test
-    public void shouldFindOptimalPathInSimpleGraphWithTreakyEdges() {
+    public void shouldFindOptimalPathInStaticGraphWithTreakyEdges() {
 //        given
 
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
 
-        int[][] adjacencyMatrix = {
-                {0, 1, 4, 5},
-                {1, 0, 2, 1},
-                {4, 2, 0, 3},
-                {5, 1, 3, 0}
-        };
+        AdjacencyMatrix adjactiveMatrix = new AdjacencyMatrix();
+        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), 1);
+        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), 4);
+        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), 5);
+        adjactiveMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), 2);
+        adjactiveMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), 1);
+        adjactiveMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), 3);
 
-        GraphFactory graphFactory = new GraphFactory();
+        EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
+        when(dummyChangeStrategy.updateEdges(any())).thenReturn(adjactiveMatrix);
+        GraphImpl graph = new GraphImpl(nodes, adjactiveMatrix, dummyChangeStrategy);
 
-        for (Node n : nodes)
-            graphFactory.addNode(n);
-
-        graphFactory.setAdjacanceMatrix(adjacencyMatrix);
-        GraphImpl graph = (GraphImpl) graphFactory.build();
-
-        GraphPathImpl simpleGraphPath = new GraphPathImpl(graph);
-        simpleGraphPath.addToPath(nodes.get(0));
-        simpleGraphPath.addToPath(nodes.get(2), adjacencyMatrix[0][2]);
-        simpleGraphPath.addToPath(nodes.get(1), adjacencyMatrix[01][2]);
-        simpleGraphPath.addToPath(nodes.get(3), adjacencyMatrix[1][3]);
+        GraphPathImpl simpleGraphPath = getSimplePath(graph);
 
         GraphImpl graphSpyded = Mockito.spy(graph);
         when(graphSpyded.getRandomPath()).thenReturn(simpleGraphPath);
@@ -81,8 +118,8 @@ public class SimulatorTest extends GraphTestHelper {
         SimulationResult simulationResult = simulator.simulate();
 
         //then
-        GraphPath optimalPath = simulationResult.getOptimalPath();
-        assertEquals(adjacencyMatrix[0][1] + adjacencyMatrix[1][3] + adjacencyMatrix[3][2], optimalPath.getSumOfWages());
+        PathHistory optimalPath = simulationResult.getOptimalPath();
+        assertEquals(adjactiveMatrix.getEdgeWeight(0, 1) + adjactiveMatrix.getEdgeWeight(1, 3) + adjactiveMatrix.getEdgeWeight(3, 2), optimalPath.getSumOfWages());
     }
 
 }
