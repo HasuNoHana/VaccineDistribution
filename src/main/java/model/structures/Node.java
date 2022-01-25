@@ -17,7 +17,6 @@ public class Node {
         this.healthyNumber = residentsNumber - illnessCases;
         this.infectingParameter = infectingParameter;
         this.isVaccinated = false;
-        updateIllnessCases(0);
     }
 
     public Node(Node node)
@@ -28,15 +27,6 @@ public class Node {
         isVaccinated = node.isVaccinated;
         infectingParameter = node.infectingParameter;
         id = node.id;
-    }
-
-    public void updateIllnessCases(int iterationNumber)
-    {
-        if(isVaccinated)
-            return;
-
-        illnessCases = Math.min((int) Math.pow(infectingParameter, iterationNumber), residentsNumber);
-        healthyNumber = residentsNumber - illnessCases;
     }
 
     public int getId()
