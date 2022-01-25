@@ -1,4 +1,8 @@
-package model.structures;
+package model.testHelpers;
+
+import model.structures.AdjacencyMatrix;
+import model.structures.EdgesChangeStrategy;
+import model.structures.Node;
 
 public class ModuloStrategy implements EdgesChangeStrategy {
     public static final int EDGE_5WEIGHT_01 = 1;
@@ -25,7 +29,7 @@ public class ModuloStrategy implements EdgesChangeStrategy {
     }
 
     protected AdjacencyMatrix getSecondAdjactencyMatrix() {
-        AdjacencyMatrix afterAdjactiveMatrix = new AdjacencyMatrix();
+        AdjacencyMatrix afterAdjactiveMatrix = new AdjacencyMatrix(5);
         afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_5WEIGHT_01);
         afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_5WEIGHT_02);
         afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_5WEIGHT_03);
@@ -40,7 +44,7 @@ public class ModuloStrategy implements EdgesChangeStrategy {
     }
 
     protected AdjacencyMatrix getThirdAdjactencyMatrix() {
-        AdjacencyMatrix afterAdjactiveMatrix = new AdjacencyMatrix();
+        AdjacencyMatrix afterAdjactiveMatrix = new AdjacencyMatrix(5);
         afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_5WEIGHT_01);
         afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_5WEIGHT_02);
         afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_5WEIGHT_03);

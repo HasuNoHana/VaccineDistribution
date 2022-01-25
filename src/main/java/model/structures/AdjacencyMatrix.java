@@ -7,8 +7,8 @@ public class AdjacencyMatrix {
         this.adjacanceMatrix = adjacanceMatrix;
     }
 
-    public AdjacencyMatrix() {
-        this.adjacanceMatrix = new int[5][5]; //TODO check if is automatilcy growing
+    public AdjacencyMatrix(int numberOfNodes) {
+        this.adjacanceMatrix = new int[numberOfNodes][numberOfNodes]; //TODO check if is automatilcy growing
     }
 
     public int getEdgeWeight(int firstNodeId, int secondNodeId) {

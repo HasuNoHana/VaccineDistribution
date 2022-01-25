@@ -2,6 +2,7 @@ package model.simulatedAnnealing;
 
 import model.GraphTestHelper;
 import model.structures.*;
+import model.testHelpers.ModuloStrategy;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -21,8 +22,7 @@ public class SimulatorTest extends GraphTestHelper {
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3, NODE_4);
         AdjacencyMatrix firstAdjactiveMatrix = getFirstAdjactencyMatrix();
 
-        EdgesChangeStrategy dummyChangeStrategy = new ModuloStrategy();
-        GraphImpl graph = new GraphImpl(nodes, firstAdjactiveMatrix, dummyChangeStrategy);
+        GraphImpl graph = new GraphImpl(nodes, firstAdjactiveMatrix, new ModuloStrategy());
 
         GraphPathImpl beforeGraphPath = getSimple5Path(graph);
 
@@ -79,25 +79,6 @@ public class SimulatorTest extends GraphTestHelper {
     }
 
     @Test
-    public void checkIfPathChangesWhenGraphIsChanged() {
-        List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
-        AdjacencyMatrix beforeAdjactiveMatrix = getBeforeAdjactencyMatrix();
-        AdjacencyMatrix afterAdjactiveMatrix = getAfterAdjactencyMatrix();
-
-        EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
-        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjactiveMatrix);
-        GraphImpl graph = new GraphImpl(nodes, beforeAdjactiveMatrix, dummyChangeStrategy);
-
-        GraphPathImpl beforeGraphPath = getSimplePath(graph);
-
-        assertEquals(EDGE_WEIGHT_02 + EDGE_WEIGHT_13 + EDGE_WEIGHT_12, beforeGraphPath.getSumOfWages());
-        //when
-        graph.getUpdatedGraphWithoutNode(NODE_0);
-        //then
-        assertEquals(EDGE_WEIGHT_02 + EDGE_WEIGHT_12_NEW + EDGE_WEIGHT_13_NEW, beforeGraphPath.getSumOfWages());
-    }
-
-    @Test
     public void shouldFindOptimalPathInStaticGraph() {
 //        given
         GraphImpl graph = getStaticGraph();
@@ -124,7 +105,7 @@ public class SimulatorTest extends GraphTestHelper {
 
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
 
-        AdjacencyMatrix adjactiveMatrix = new AdjacencyMatrix();
+        AdjacencyMatrix adjactiveMatrix = new AdjacencyMatrix(4);
         adjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), 1);
         adjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), 4);
         adjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), 5);
