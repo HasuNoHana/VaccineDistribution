@@ -16,6 +16,37 @@ public class SimulatorTest extends GraphTestHelper {
     public static final int KMAX = 100;
 
     @Test
+    public void shouldFindOptimalPathIn5NodeDynamicGraph() {
+//        given
+        List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3, NODE_4);
+        AdjacencyMatrix firstAdjactiveMatrix = getFirstAdjactencyMatrix();
+
+        EdgesChangeStrategy dummyChangeStrategy = new ModuloStrategy();
+        GraphImpl graph = new GraphImpl(nodes, firstAdjactiveMatrix, dummyChangeStrategy);
+
+        GraphPathImpl beforeGraphPath = getSimple5Path(graph);
+
+        GraphImpl graphSpyded = Mockito.spy(graph);
+        when(graphSpyded.getRandomPath()).thenReturn(beforeGraphPath);
+
+        CostFunction costFunction = new CostFunctionGraphWages();
+        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
+        Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
+
+        //when
+        SimulationResult simulationResult = simulator.simulate();
+
+        //then
+        PathHistory optimalPath = simulationResult.getOptimalPath();
+        assertEquals(EDGE_5WEIGHT_01 + EDGE_5WEIGHT_13_NEW + EDGE_5WEIGHT_34_NEW + EDGE_5WEIGHT_24, optimalPath.getSumOfWages());
+        assertEquals(0, optimalPath.getPath().get(0).getId());
+        assertEquals(1, optimalPath.getPath().get(1).getId());
+        assertEquals(3, optimalPath.getPath().get(2).getId());
+        assertEquals(4, optimalPath.getPath().get(3).getId());
+        assertEquals(2, optimalPath.getPath().get(4).getId());
+    }
+
+    @Test
     public void shouldFindOptimalPathInDynamicGraph() {
 //        given
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
