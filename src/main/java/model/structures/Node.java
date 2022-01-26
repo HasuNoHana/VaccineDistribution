@@ -64,7 +64,10 @@ public class Node {
     }
 
     public void deliverVaccines(int minutes) {
-        updateNodeStatistics(minutes);
+
+        if(minutes != 0)
+            updateNodeStatistics(minutes);
+
         isVaccinated = true;
         vaccinated = healthyResidents;
         deliveryTime = minutes;

@@ -2,11 +2,11 @@ package model.structures;
 
 import java.util.Random;
 
-public class ConstantSumOfEdgesStrategy implements EdgesChangeStrategy {
-    private Random randomForAdjacencyMatrix;
+public class DefaultEdgesStrategy implements EdgesChangeStrategy {
+    private final Random randomForAdjacencyMatrix;
 
-    public ConstantSumOfEdgesStrategy(long randomForAdjacencyMatrix) {
-        this.randomForAdjacencyMatrix = new Random(randomForAdjacencyMatrix);
+    public DefaultEdgesStrategy(long seed) {
+        this.randomForAdjacencyMatrix = new Random(seed);
     }
 
     @Override

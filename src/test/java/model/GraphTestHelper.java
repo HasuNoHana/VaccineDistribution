@@ -43,7 +43,7 @@ public class GraphTestHelper {
         adjacencyMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13);
         adjacencyMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
 
-        DummyChangeStrategy constantSumOfEdgesStrategy = new DummyChangeStrategy();
+        DummyEdgesChangeStrategy constantSumOfEdgesStrategy = new DummyEdgesChangeStrategy();
 
         return new GraphImpl(nodes, adjacencyMatrix, constantSumOfEdgesStrategy);
     }

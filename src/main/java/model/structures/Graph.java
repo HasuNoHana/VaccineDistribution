@@ -18,4 +18,6 @@ public interface Graph {
     int getEdgeSumForNodeIdList(List<Integer> graphPath);
 
     int getEdgeBetweenNodes(Node node, Node node1);
+
+    Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved, int minutes);
 }

@@ -38,11 +38,12 @@ public class PathHistory {
     }
 
     public int getSumOfWages() {
-        int count = 0;
-        for (int i = 0; i < edges.size(); i++) {
-            count += edges.get(i);
+        int sum = 0;
+
+        for (Integer edge : edges) {
+            sum += edge;
         }
-        return count;
+        return sum;
     }
 
     public int getIllnessCases() {

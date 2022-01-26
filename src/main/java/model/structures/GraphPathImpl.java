@@ -20,7 +20,7 @@ public class GraphPathImpl implements GraphPath {
         this.graph = graph;
     }
 
-    public GraphPathImpl(Graph graph, ArrayList<Integer> weights, ArrayList<Node> path) {
+    public GraphPathImpl(Graph graph, ArrayList<Node> path) {
         this.path = path;
         this.graph = graph;
     }
@@ -30,7 +30,6 @@ public class GraphPathImpl implements GraphPath {
         Node theNewNode = new Node(node);
 
         path.add(theNewNode);
-
     }
 
     @Override

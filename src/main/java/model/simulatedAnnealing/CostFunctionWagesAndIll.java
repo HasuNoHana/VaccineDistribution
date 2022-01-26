@@ -4,8 +4,8 @@ import model.structures.GraphPath;
 import model.structures.PathHistory;
 
 public class CostFunctionWagesAndIll implements CostFunction {
-    private double weightsParameter;
-    private double illParameter;
+    private final double weightsParameter;
+    private final double illParameter;
 
     public CostFunctionWagesAndIll(double weightsParameter, double illParameter) {
         this.weightsParameter = weightsParameter;

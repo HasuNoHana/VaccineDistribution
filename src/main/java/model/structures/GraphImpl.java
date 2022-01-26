@@ -12,13 +12,11 @@ public class GraphImpl implements Graph {
 
     private final HashMap<Integer, Node> nodes;
     private AdjacencyMatrix adjacencyMatrix;
-    private int iterationStep;
     private EdgesChangeStrategy edgesChangeStrategy;
 
     private GraphImpl(AdjacencyMatrix adjacencyMatrix, HashMap<Integer, Node> nodes, EdgesChangeStrategy edgesChangeStrategy) {
         this.adjacencyMatrix = adjacencyMatrix;
         this.nodes = nodes;
-        this.iterationStep = 0;
         this.edgesChangeStrategy = edgesChangeStrategy;
     }
 
@@ -30,8 +28,13 @@ public class GraphImpl implements Graph {
         for (Node node : nodeArrayList)
             nodes.put(node.getId(), node);
 
-        this.iterationStep = 0;
         this.edgesChangeStrategy = edgesChangeStrategy;
+    }
+
+    private void updateNodes(int minutes)
+    {
+        for(Node node : nodes.values())
+            node.updateNodeStatistics(minutes);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class GraphImpl implements Graph {
             weights.add(weight);
         }
 
-        return new GraphPathImpl(this, weights, nodeArrayList) {
+        return new GraphPathImpl(this, nodeArrayList) {
         };
     }
 
@@ -78,10 +81,6 @@ public class GraphImpl implements Graph {
     public int getEdgeBetweenNodes(Node node, Node node1) {
         return adjacencyMatrix.getEdgeWeight(node.getId(), node1.getId());
     }
-
-    /*public int getWage(int firstNodeId, int secondNodeId) {
-        return adjacencyMatrix.getEdgeWeight(firstNodeId, secondNodeId);
-    }*/
 
     public Graph getSubgraphWithUnvisitedNodes() {
         HashMap<Integer, Node> subgraphNodes = new HashMap<>();
@@ -116,6 +115,17 @@ public class GraphImpl implements Graph {
     public Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved) {
         this.adjacencyMatrix = this.edgesChangeStrategy.updateEdges(this.adjacencyMatrix);
         logger.info("Updating Matrix to " + this.adjacencyMatrix);
+
+        return getSubgraphWithUnvisitedNodes();
+    }
+
+    @Override
+    public Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved, int minutes) {
+        this.adjacencyMatrix = this.edgesChangeStrategy.updateEdges(this.adjacencyMatrix);
+        nodeToBeRemoved.deliverVaccines(minutes);
+        updateNodes(minutes);
+        logger.info("Updating Matrix to " + this.adjacencyMatrix);
+
         return getSubgraphWithUnvisitedNodes();
     }
 }

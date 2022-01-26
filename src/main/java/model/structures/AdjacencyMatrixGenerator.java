@@ -34,7 +34,6 @@ public class AdjacencyMatrixGenerator {
             leftNumbers--;
         }
 
-        //sent
         int k = 0;
         for (int i = 0; i < nodesNumber; i++)
             for (int j = i; j < nodesNumber; j++) {
@@ -44,8 +43,7 @@ public class AdjacencyMatrixGenerator {
                     k++;
                 }
             }
-
-
+        
         return adjacencyMatrix;
     }
 }
