@@ -3,30 +3,35 @@ package model.structures;
 import java.util.Objects;
 
 public class Node {
-    private int residentsNumber;
+    private final int residentsNumber;
     private int illnessCases;
-    private int healthyNumber;
+    private int healthyResidents;
     private boolean isVaccinated;
-    private int infectingParameter;
-    private int id;
+    private final int infectingParameter;
+    private final int id;
+    private int vaccinated;
+    private int deliveryTime;
 
     public Node(int id, int residentsNumber, int infectingParameter) {
         this.id = id;
         this.residentsNumber = residentsNumber;
         this.illnessCases = 0;
-        this.healthyNumber = residentsNumber - illnessCases;
+        this.healthyResidents = residentsNumber - illnessCases;
         this.infectingParameter = infectingParameter;
         this.isVaccinated = false;
+        this.vaccinated = 0;
+        this.deliveryTime = 0;
     }
 
-    public Node(Node node)
-    {
+    public Node(Node node) {
         residentsNumber = node.residentsNumber;
         illnessCases = node.illnessCases;
-        healthyNumber = node.healthyNumber;
+        healthyResidents = node.healthyResidents;
         isVaccinated = node.isVaccinated;
         infectingParameter = node.infectingParameter;
         id = node.id;
+        vaccinated = node.vaccinated;
+        deliveryTime = node.deliveryTime;
     }
 
     public int getId() {
@@ -41,12 +46,37 @@ public class Node {
         return isVaccinated;
     }
 
+    private int calculateIllnessCases(int minutes) {
+        double theExponent = ((double) minutes) / 60;
+        return (int) Math.min(Math.floor(Math.pow(infectingParameter, theExponent)), residentsNumber);
+    }
+
+    public void updateNodeStatistics(int minutes) {
+        if (isVaccinated)
+            return;
+
+        illnessCases = calculateIllnessCases(minutes);
+        healthyResidents = residentsNumber - illnessCases;
+    }
+
+    public int predictIllnessCases(int minutes) {
+        return calculateIllnessCases(minutes);
+    }
+
+    public void deliverVaccines(int minutes) {
+        updateNodeStatistics(minutes);
+        isVaccinated = true;
+        vaccinated = healthyResidents;
+        deliveryTime = minutes;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return residentsNumber == node.residentsNumber && illnessCases == node.illnessCases && healthyNumber == node.healthyNumber && isVaccinated == node.isVaccinated && infectingParameter == node.infectingParameter && id == node.id;
+        return residentsNumber == node.residentsNumber && illnessCases == node.illnessCases && healthyResidents == node.healthyResidents && isVaccinated == node.isVaccinated && infectingParameter == node.infectingParameter && id == node.id;
     }
 
     @Override
@@ -58,6 +88,6 @@ public class Node {
 
     @Override
     public int hashCode() {
-        return Objects.hash(residentsNumber, illnessCases, healthyNumber, isVaccinated, infectingParameter, id);
+        return Objects.hash(residentsNumber, illnessCases, healthyResidents, isVaccinated, infectingParameter, id);
     }
 }

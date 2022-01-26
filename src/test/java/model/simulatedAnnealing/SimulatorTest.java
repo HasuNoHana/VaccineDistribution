@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 public class SimulatorTest extends GraphTestHelper {
 
-    public static final int KMAX = 100;
+    public static final int K_MAX = 100;
 
     @Test
     public void shouldFindOptimalPathIn5NodeDynamicGraph() {
@@ -30,7 +30,7 @@ public class SimulatorTest extends GraphTestHelper {
         when(spiedGraph.getRandomPath()).thenReturn(beforeGraphPath);
 
         CostFunction costFunction = new CostFunctionGraphWages();
-        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
+        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, K_MAX);
         Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
@@ -63,7 +63,7 @@ public class SimulatorTest extends GraphTestHelper {
         when(spiedGraph.getRandomPath()).thenReturn(beforeGraphPath);
 
         CostFunction costFunction = new CostFunctionGraphWages();
-        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
+        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, K_MAX);
         Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
@@ -88,7 +88,7 @@ public class SimulatorTest extends GraphTestHelper {
         when(spiedGraph.getRandomPath()).thenReturn(simpleGraphPath);
 
         CostFunction costFunction = new CostFunctionGraphWages();
-        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
+        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, K_MAX);
         Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
@@ -100,7 +100,7 @@ public class SimulatorTest extends GraphTestHelper {
     }
 
     @Test
-    public void shouldFindOptimalPathInStaticGraphWithTreakyEdges() {
+    public void shouldFindOptimalPathInStaticGraphWithTrickyEdges() {
 //        given
 
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
@@ -123,7 +123,7 @@ public class SimulatorTest extends GraphTestHelper {
         when(spiedGraph.getRandomPath()).thenReturn(simpleGraphPath);
 
         CostFunction costFunction = new CostFunctionWagesAndIll(1, 0);
-        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
+        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, K_MAX);
         Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
