@@ -1,15 +1,19 @@
 package model.structures;
 
+import model.simulatedAnnealing.CostFunction;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PathHistory {
     private ArrayList<Node> nodes;
     private ArrayList<Integer> edges;
+    private CostFunction costFunction;
 
-    public PathHistory() {
+    public PathHistory(CostFunction costFunction) {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
+        this.costFunction = costFunction;
     }
 
     public void addNode(Node node) {
@@ -29,11 +33,24 @@ public class PathHistory {
         return this.nodes;
     }
 
+    public int evaluate() {
+        return this.costFunction.evaluate(this);
+    }
+
     public int getSumOfWages() {
         int count = 0;
         for (int i = 0; i < edges.size(); i++) {
             count += edges.get(i);
         }
         return count;
+    }
+
+    public int getIllnessCases() {
+        int illnessCases = 0;
+
+        for (Node n : nodes)
+            illnessCases += n.getIllnessCases();
+
+        return illnessCases;
     }
 }

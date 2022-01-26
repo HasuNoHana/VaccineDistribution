@@ -17,7 +17,7 @@ public class Simulator {
     public Simulator(Graph graph, SimulatedAnnealing simulatedAnnealing) {
         this.graph= graph;
         this.simulatedAnnealing = simulatedAnnealing;
-        this.optimalPath = new PathHistory();
+        this.optimalPath = new PathHistory(simulatedAnnealing.getCostFunction());
     }
 
     public SimulationResult simulate() {

@@ -56,4 +56,8 @@ public class SimulatedAnnealing {
         }
         return currentPath;
     }
+
+    public CostFunction getCostFunction() {
+        return costFunction;
+    }
 }

@@ -38,7 +38,7 @@ public class SimulatorTest extends GraphTestHelper {
 
         //then
         PathHistory optimalPath = simulationResult.getOptimalPath();
-        assertEquals(EDGE_5WEIGHT_01 + EDGE_5WEIGHT_13_NEW + EDGE_5WEIGHT_34_NEW + EDGE_5WEIGHT_24, optimalPath.getSumOfWages());
+        assertEquals(EDGE_5WEIGHT_01 + EDGE_5WEIGHT_13_NEW + EDGE_5WEIGHT_34_NEW + EDGE_5WEIGHT_24, optimalPath.evaluate());
         assertEquals(0, optimalPath.getPath().get(0).getId());
         assertEquals(1, optimalPath.getPath().get(1).getId());
         assertEquals(3, optimalPath.getPath().get(2).getId());
@@ -71,7 +71,7 @@ public class SimulatorTest extends GraphTestHelper {
 
         //then
         PathHistory optimalPath = simulationResult.getOptimalPath();
-        assertEquals(EDGE_WEIGHT_01 + EDGE_WEIGHT_23 + EDGE_WEIGHT_13_NEW, optimalPath.getSumOfWages());
+        assertEquals(EDGE_WEIGHT_01 + EDGE_WEIGHT_23 + EDGE_WEIGHT_13_NEW, optimalPath.evaluate());
         assertEquals(0, optimalPath.getPath().get(0).getId());
         assertEquals(1, optimalPath.getPath().get(1).getId());
         assertEquals(3, optimalPath.getPath().get(2).getId());
@@ -96,7 +96,7 @@ public class SimulatorTest extends GraphTestHelper {
 
         //then
         PathHistory optimalPath = simulationResult.getOptimalPath();
-        assertEquals(EDGE_WEIGHT_01 + EDGE_WEIGHT_12 + EDGE_WEIGHT_23, optimalPath.getSumOfWages());
+        assertEquals(EDGE_WEIGHT_01 + EDGE_WEIGHT_12 + EDGE_WEIGHT_23, optimalPath.evaluate());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class SimulatorTest extends GraphTestHelper {
 
         //then
         PathHistory optimalPath = simulationResult.getOptimalPath();
-        assertEquals(adjactiveMatrix.getEdgeWeight(0, 1) + adjactiveMatrix.getEdgeWeight(1, 3) + adjactiveMatrix.getEdgeWeight(3, 2), optimalPath.getSumOfWages());
+        assertEquals(adjactiveMatrix.getEdgeWeight(0, 1) + adjactiveMatrix.getEdgeWeight(1, 3) + adjactiveMatrix.getEdgeWeight(3, 2), optimalPath.evaluate());
     }
 
 }
