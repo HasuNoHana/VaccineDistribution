@@ -96,7 +96,7 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public int getFirstEdge() {
-        return graph.getEdgeBeetwenNodes(path.get(0), path.get(1));
+        return graph.getEdgeBetweenNodes(path.get(0), path.get(1));
     }
 
     public Node getLastNode() {
@@ -125,7 +125,7 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public int getEdgeBetweenNodes(Node node1, Node node2) {
-        return this.graph.getEdgeBeetwenNodes(node1, node2);
+        return this.graph.getEdgeBetweenNodes(node1, node2);
     }
 
     @Override
@@ -134,6 +134,6 @@ public class GraphPathImpl implements GraphPath {
             throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
         }
 
-        return graph.getEdgeBeetwenNodes(path.get(path.size() - 2), path.get(path.size() - 1)); //TODO test this
+        return graph.getEdgeBetweenNodes(path.get(path.size() - 2), path.get(path.size() - 1)); //TODO test this
     }
 }

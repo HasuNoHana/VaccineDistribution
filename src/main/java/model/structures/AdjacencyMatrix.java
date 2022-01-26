@@ -1,51 +1,51 @@
 package model.structures;
 
 public class AdjacencyMatrix {
-    private int[][] adjacanceMatrix;
+    private int[][] adjacencyMatrix;
 
-    public AdjacencyMatrix(int[][] adjacanceMatrix) {
-        this.adjacanceMatrix = adjacanceMatrix;
+    public AdjacencyMatrix(int[][] adjacencyMatrix) {
+        this.adjacencyMatrix = adjacencyMatrix;
     }
 
     public AdjacencyMatrix(int numberOfNodes) {
-        this.adjacanceMatrix = new int[numberOfNodes][numberOfNodes]; //TODO check if is automatilcy growing
+        this.adjacencyMatrix = new int[numberOfNodes][numberOfNodes]; //TODO check if is automatilcy growing
     }
 
     public int getEdgeWeight(int firstNodeId, int secondNodeId) {
-        return adjacanceMatrix[firstNodeId][secondNodeId];
+        return adjacencyMatrix[firstNodeId][secondNodeId];
     }
 
     public int[][] getMatrix() {
-        return adjacanceMatrix;  //TODO remove me
+        return adjacencyMatrix;  //TODO remove me
     }
 
     public void setEdge(int firstNodeId, int secondNodeId, int weight) {
-        adjacanceMatrix[firstNodeId][secondNodeId] = weight;
-        adjacanceMatrix[secondNodeId][firstNodeId] = weight;
+        adjacencyMatrix[firstNodeId][secondNodeId] = weight;
+        adjacencyMatrix[secondNodeId][firstNodeId] = weight;
     }
 
     public int getNumberOfNodes() {
-        return this.adjacanceMatrix.length;
+        return this.adjacencyMatrix.length;
     }
 
     public int getSumOfEdges() {
-        int counter = 0;
-        for (int i = 0; i < adjacanceMatrix.length; i++) {
-            for (int j = 0; j < adjacanceMatrix.length; j++) {
-                counter += adjacanceMatrix[i][j];
+        int sum = 0;
+        for (int[] matrix : adjacencyMatrix) {
+            for (int j = 0; j < adjacencyMatrix.length; j++) {
+                sum += matrix[j];
             }
         }
-        return counter / 2;
+        return sum / 2;
     }
 
     @Override
     public String toString() {
-        String matrix = "";
-        for (int i = 0; i < adjacanceMatrix.length; i++) {
-            for (int j = 0; j < adjacanceMatrix.length; j++) {
-                matrix += adjacanceMatrix[i][j] + " ";
+        StringBuilder matrix = new StringBuilder();
+        for (int[] values : adjacencyMatrix) {
+            for (int j = 0; j < adjacencyMatrix.length; j++) {
+                matrix.append(values[j]).append(" ");
             }
-            matrix += "\n";
+            matrix.append("\n");
         }
         return "AdjacencyMatrix{" + "\n" +
                 matrix +

@@ -52,16 +52,14 @@ public class GraphImpl implements Graph {
         if (nodesToSwap.size() == 2)
             Collections.swap(nodeArrayList, nodeArrayList.indexOf(nodesToSwap.get(0)), nodeArrayList.indexOf(nodesToSwap.get(1)));
 
-        int sumOfWages = 0;
-        ArrayList<Integer> wages = new ArrayList<>();
+        ArrayList<Integer> weights = new ArrayList<>();
 
         for (int i = 1; i < nodeArrayList.size(); i++) {
-            int wage = adjacencyMatrix.getMatrix()[nodeArrayList.get(i).getId()][nodeArrayList.get(i - 1).getId()];
-            sumOfWages += wage;
-            wages.add(wage);
+            int weight = adjacencyMatrix.getMatrix()[nodeArrayList.get(i).getId()][nodeArrayList.get(i - 1).getId()];
+            weights.add(weight);
         }
 
-        return new GraphPathImpl(this, wages, nodeArrayList) {
+        return new GraphPathImpl(this, weights, nodeArrayList) {
         };
     }
 
@@ -77,13 +75,13 @@ public class GraphImpl implements Graph {
     }
 
     @Override
-    public int getEdgeBeetwenNodes(Node node, Node node1) {
+    public int getEdgeBetweenNodes(Node node, Node node1) {
         return adjacencyMatrix.getEdgeWeight(node.getId(), node1.getId());
     }
 
-    public int getWage(int firstNodeId, int secondNodeId) {
+    /*public int getWage(int firstNodeId, int secondNodeId) {
         return adjacencyMatrix.getEdgeWeight(firstNodeId, secondNodeId);
-    }
+    }*/
 
     public Graph getSubgraphWithUnvisitedNodes() {
         HashMap<Integer, Node> subgraphNodes = new HashMap<>();
@@ -109,8 +107,7 @@ public class GraphImpl implements Graph {
 
         GraphPathImpl graphPath = new GraphPathImpl(this);
 
-        for (int i = 0; i < pathNodes.size(); i++)
-            graphPath.addToPath(pathNodes.get(i));
+        for (Node pathNode : pathNodes) graphPath.addToPath(pathNode);
 
         return graphPath;
     }

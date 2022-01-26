@@ -17,5 +17,5 @@ public interface Graph {
 
     int getEdgeSumForNodeIdList(List<Integer> graphPath);
 
-    int getEdgeBeetwenNodes(Node node, Node node1);
+    int getEdgeBetweenNodes(Node node, Node node1);
 }

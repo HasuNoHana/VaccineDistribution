@@ -29,15 +29,13 @@ public class Node {
         id = node.id;
     }
 
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
     public int getIllnessCases() {
         return illnessCases;
     }
-
 
     public boolean getIsVaccinated() {
         return isVaccinated;
