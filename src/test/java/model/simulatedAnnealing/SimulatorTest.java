@@ -20,18 +20,18 @@ public class SimulatorTest extends GraphTestHelper {
     public void shouldFindOptimalPathIn5NodeDynamicGraph() {
 //        given
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3, NODE_4);
-        AdjacencyMatrix firstAdjactiveMatrix = getFirstAdjactencyMatrix();
+        AdjacencyMatrix firstAdjacencyMatrix = getFirstAdjacencyMatrix();
 
-        GraphImpl graph = new GraphImpl(nodes, firstAdjactiveMatrix, new ModuloStrategy());
+        GraphImpl graph = new GraphImpl(nodes, firstAdjacencyMatrix, new ModuloStrategy());
 
         GraphPathImpl beforeGraphPath = getSimple5Path(graph);
 
-        GraphImpl graphSpyded = Mockito.spy(graph);
-        when(graphSpyded.getRandomPath()).thenReturn(beforeGraphPath);
+        GraphImpl spiedGraph = Mockito.spy(graph);
+        when(spiedGraph.getRandomPath()).thenReturn(beforeGraphPath);
 
         CostFunction costFunction = new CostFunctionGraphWages();
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
-        Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
+        Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
         SimulationResult simulationResult = simulator.simulate();
@@ -50,21 +50,21 @@ public class SimulatorTest extends GraphTestHelper {
     public void shouldFindOptimalPathInDynamicGraph() {
 //        given
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
-        AdjacencyMatrix beforeAdjactiveMatrix = getBeforeAdjactencyMatrix();
-        AdjacencyMatrix afterAdjactiveMatrix = getAfterAdjactencyMatrix();
+        AdjacencyMatrix beforeAdjacencyMatrix = getBeforeAdjacencyMatrix();
+        AdjacencyMatrix afterAdjacencyMatrix = getAfterAdjacencyMatrix();
 
         EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
-        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjactiveMatrix);
-        GraphImpl graph = new GraphImpl(nodes, beforeAdjactiveMatrix, dummyChangeStrategy);
+        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjacencyMatrix);
+        GraphImpl graph = new GraphImpl(nodes, beforeAdjacencyMatrix, dummyChangeStrategy);
 
         GraphPathImpl beforeGraphPath = getSimplePath(graph);
 
-        GraphImpl graphSpyded = Mockito.spy(graph);
-        when(graphSpyded.getRandomPath()).thenReturn(beforeGraphPath);
+        GraphImpl spiedGraph = Mockito.spy(graph);
+        when(spiedGraph.getRandomPath()).thenReturn(beforeGraphPath);
 
         CostFunction costFunction = new CostFunctionGraphWages();
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
-        Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
+        Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
         SimulationResult simulationResult = simulator.simulate();
@@ -84,12 +84,12 @@ public class SimulatorTest extends GraphTestHelper {
         GraphImpl graph = getStaticGraph();
         GraphPathImpl simpleGraphPath = getSimplePath(graph);
 
-        GraphImpl graphSpyded = Mockito.spy(graph);
-        when(graphSpyded.getRandomPath()).thenReturn(simpleGraphPath);
+        GraphImpl spiedGraph = Mockito.spy(graph);
+        when(spiedGraph.getRandomPath()).thenReturn(simpleGraphPath);
 
         CostFunction costFunction = new CostFunctionGraphWages();
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
-        Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
+        Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
         SimulationResult simulationResult = simulator.simulate();
@@ -105,33 +105,33 @@ public class SimulatorTest extends GraphTestHelper {
 
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
 
-        AdjacencyMatrix adjactiveMatrix = new AdjacencyMatrix(4);
-        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), 1);
-        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), 4);
-        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), 5);
-        adjactiveMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), 2);
-        adjactiveMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), 1);
-        adjactiveMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), 3);
+        AdjacencyMatrix adjacencyMatrix = new AdjacencyMatrix(4);
+        adjacencyMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), 1);
+        adjacencyMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), 4);
+        adjacencyMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), 5);
+        adjacencyMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), 2);
+        adjacencyMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), 1);
+        adjacencyMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), 3);
 
         EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
-        when(dummyChangeStrategy.updateEdges(any())).thenReturn(adjactiveMatrix);
-        GraphImpl graph = new GraphImpl(nodes, adjactiveMatrix, dummyChangeStrategy);
+        when(dummyChangeStrategy.updateEdges(any())).thenReturn(adjacencyMatrix);
+        GraphImpl graph = new GraphImpl(nodes, adjacencyMatrix, dummyChangeStrategy);
 
         GraphPathImpl simpleGraphPath = getSimplePath(graph);
 
-        GraphImpl graphSpyded = Mockito.spy(graph);
-        when(graphSpyded.getRandomPath()).thenReturn(simpleGraphPath);
+        GraphImpl spiedGraph = Mockito.spy(graph);
+        when(spiedGraph.getRandomPath()).thenReturn(simpleGraphPath);
 
         CostFunction costFunction = new CostFunctionWagesAndIll(1, 0);
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
-        Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
+        Simulator simulator = new Simulator(spiedGraph, simulatedAnnealing);
 
         //when
         SimulationResult simulationResult = simulator.simulate();
 
         //then
         PathHistory optimalPath = simulationResult.getOptimalPath();
-        assertEquals(adjactiveMatrix.getEdgeWeight(0, 1) + adjactiveMatrix.getEdgeWeight(1, 3) + adjactiveMatrix.getEdgeWeight(3, 2), optimalPath.evaluate());
+        assertEquals(adjacencyMatrix.getEdgeWeight(0, 1) + adjacencyMatrix.getEdgeWeight(1, 3) + adjacencyMatrix.getEdgeWeight(3, 2), optimalPath.evaluate());
     }
 
 }

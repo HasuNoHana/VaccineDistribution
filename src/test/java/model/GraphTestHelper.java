@@ -35,72 +35,82 @@ public class GraphTestHelper {
 
     protected GraphImpl getStaticGraph() {
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
-        AdjacencyMatrix adjactiveMatrix = new AdjacencyMatrix(4);
-        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_WEIGHT_01);
-        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_WEIGHT_02);
-        adjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_WEIGHT_03);
-        adjactiveMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_WEIGHT_12);
-        adjactiveMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13);
-        adjactiveMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
+        AdjacencyMatrix adjacencyMatrix = new AdjacencyMatrix(4);
+        adjacencyMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_WEIGHT_01);
+        adjacencyMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_WEIGHT_02);
+        adjacencyMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_WEIGHT_03);
+        adjacencyMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_WEIGHT_12);
+        adjacencyMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13);
+        adjacencyMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
 
         DummyChangeStrategy constantSumOfEdgesStrategy = new DummyChangeStrategy();
-        GraphImpl graph = new GraphImpl(nodes, adjactiveMatrix, constantSumOfEdgesStrategy);
-        return graph;
+
+        return new GraphImpl(nodes, adjacencyMatrix, constantSumOfEdgesStrategy);
     }
 
-    protected AdjacencyMatrix getBeforeAdjactencyMatrix() {
-        AdjacencyMatrix beforeAdjactiveMatrix = new AdjacencyMatrix(4);
-        beforeAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_WEIGHT_01);
-        beforeAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_WEIGHT_02);
-        beforeAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_WEIGHT_03);
-        beforeAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_WEIGHT_12);
-        beforeAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13);
-        beforeAdjactiveMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
-        return beforeAdjactiveMatrix;
+    protected AdjacencyMatrix getBeforeAdjacencyMatrix() {
+        AdjacencyMatrix beforeAdjacencyMatrix = new AdjacencyMatrix(4);
+
+        beforeAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_WEIGHT_01);
+        beforeAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_WEIGHT_02);
+        beforeAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_WEIGHT_03);
+        beforeAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_WEIGHT_12);
+        beforeAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13);
+        beforeAdjacencyMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
+
+        return beforeAdjacencyMatrix;
     }
 
-    protected AdjacencyMatrix getAfterAdjactencyMatrix() {
-        AdjacencyMatrix afterAdjactiveMatrix = new AdjacencyMatrix(4);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_WEIGHT_01);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_WEIGHT_02);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_WEIGHT_03);
-        afterAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_WEIGHT_12_NEW);
-        afterAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13_NEW);
-        afterAdjactiveMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
-        return afterAdjactiveMatrix;
+    protected AdjacencyMatrix getAfterAdjacencyMatrix() {
+        AdjacencyMatrix afterAdjacencyMatrix = new AdjacencyMatrix(4);
+
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_WEIGHT_01);
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_WEIGHT_02);
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_WEIGHT_03);
+        afterAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_WEIGHT_12_NEW);
+        afterAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_WEIGHT_13_NEW);
+        afterAdjacencyMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_WEIGHT_23);
+
+        return afterAdjacencyMatrix;
     }
 
     protected GraphPathImpl getSimplePath(GraphImpl graph) {
         GraphPathImpl simpleGraphPath = new GraphPathImpl(graph);
+
         simpleGraphPath.addToPath(NODE_0);
         simpleGraphPath.addToPath(NODE_2);
         simpleGraphPath.addToPath(NODE_1);
         simpleGraphPath.addToPath(NODE_3);
+
         return simpleGraphPath;
     }
 
-    protected AdjacencyMatrix getFirstAdjactencyMatrix() {
-        AdjacencyMatrix afterAdjactiveMatrix = new AdjacencyMatrix(5);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_5WEIGHT_01);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_5WEIGHT_02);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_5WEIGHT_03);
-        afterAdjactiveMatrix.setEdge(NODE_0.getId(), NODE_4.getId(), EDGE_5WEIGHT_04);
-        afterAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_5WEIGHT_12);
-        afterAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_5WEIGHT_13);
-        afterAdjactiveMatrix.setEdge(NODE_1.getId(), NODE_4.getId(), EDGE_5WEIGHT_14);
-        afterAdjactiveMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_5WEIGHT_23);
-        afterAdjactiveMatrix.setEdge(NODE_2.getId(), NODE_4.getId(), EDGE_5WEIGHT_24);
-        afterAdjactiveMatrix.setEdge(NODE_3.getId(), NODE_4.getId(), EDGE_5WEIGHT_34);
-        return afterAdjactiveMatrix;
+    protected AdjacencyMatrix getFirstAdjacencyMatrix() {
+        AdjacencyMatrix afterAdjacencyMatrix = new AdjacencyMatrix(5);
+
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_1.getId(), EDGE_5WEIGHT_01);
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_2.getId(), EDGE_5WEIGHT_02);
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_3.getId(), EDGE_5WEIGHT_03);
+        afterAdjacencyMatrix.setEdge(NODE_0.getId(), NODE_4.getId(), EDGE_5WEIGHT_04);
+        afterAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_2.getId(), EDGE_5WEIGHT_12);
+        afterAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_3.getId(), EDGE_5WEIGHT_13);
+        afterAdjacencyMatrix.setEdge(NODE_1.getId(), NODE_4.getId(), EDGE_5WEIGHT_14);
+        afterAdjacencyMatrix.setEdge(NODE_2.getId(), NODE_3.getId(), EDGE_5WEIGHT_23);
+        afterAdjacencyMatrix.setEdge(NODE_2.getId(), NODE_4.getId(), EDGE_5WEIGHT_24);
+        afterAdjacencyMatrix.setEdge(NODE_3.getId(), NODE_4.getId(), EDGE_5WEIGHT_34);
+
+        return afterAdjacencyMatrix;
     }
 
     protected GraphPathImpl getSimple5Path(GraphImpl graph) {
         GraphPathImpl simpleGraphPath = new GraphPathImpl(graph);
+
         simpleGraphPath.addToPath(NODE_0);
         simpleGraphPath.addToPath(NODE_2);
         simpleGraphPath.addToPath(NODE_1);
         simpleGraphPath.addToPath(NODE_4);
         simpleGraphPath.addToPath(NODE_3);
+
         return simpleGraphPath;
     }
 }

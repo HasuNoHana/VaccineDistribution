@@ -48,9 +48,6 @@ public class Simulator {
     }
 
     private boolean stopSimulation(GraphPath currentPath) {
-        if (currentPath.getSize()<=2){
-            return true;
-        }
-        return false;
+        return currentPath.getSize() <= 2;
     }
 }

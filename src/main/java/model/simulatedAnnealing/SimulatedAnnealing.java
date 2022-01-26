@@ -8,11 +8,11 @@ public class SimulatedAnnealing {
     final static Logger logger = LoggerFactory.getLogger(Simulator.class);
 
     private final CostFunction costFunction;
-    private final int kmax;
+    private final int kMax;
 
-    public SimulatedAnnealing(CostFunction costFunction, int kmax) {
+    public SimulatedAnnealing(CostFunction costFunction, int kMax) {
         this.costFunction = costFunction;
-        this.kmax = kmax;
+        this.kMax = kMax;
     }
 
     /**
@@ -25,8 +25,8 @@ public class SimulatedAnnealing {
         GraphPath currentPath = pathFromPreviousStep;
 
         double temperature;
-        for (int k = 0; k < kmax; k++) {
-            temperature = (1.0 - (k + 1.0) / kmax);
+        for (int k = 0; k < kMax; k++) {
+            temperature = (1.0 - (k + 1.0) / kMax);
             currentPath = doOneStepOfSimulatedAnnealing(currentPath, temperature);
         }
 
@@ -37,21 +37,21 @@ public class SimulatedAnnealing {
         int nodeId1 = currentPath.getRandomNode().getId();
         int nodeId2 = currentPath.getRandomNodeDifferentThat(nodeId1).getId();
 
-        GraphPath swapedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2);
+        GraphPath swappedPath = currentPath.getCopyWithSwappedNodes(nodeId1, nodeId2);
         int currentPathCost = costFunction.evaluate(currentPath);
         logger.debug("Current path is {}", currentPath);
         logger.debug("Current cost function is {}", currentPathCost);
 
-        int swapedPathCost = costFunction.evaluate(swapedPath);
-        logger.debug("Swapped path is {}", swapedPath);
-        logger.debug("New cost function is {}", swapedPathCost);
+        int swappedPathCost = costFunction.evaluate(swappedPath);
+        logger.debug("Swapped path is {}", swappedPath);
+        logger.debug("New cost function is {}", swappedPathCost);
 
-        if (swapedPathCost < currentPathCost) {
-            currentPath = swapedPath;
+        if (swappedPathCost < currentPathCost) {
+            currentPath = swappedPath;
         } else {
             double p = Math.random();
-            if (p < Math.exp(-(swapedPathCost - currentPathCost) / temperature)) {
-                currentPath = swapedPath;
+            if (p < Math.exp(-(swappedPathCost - currentPathCost) / temperature)) {
+                currentPath = swappedPath;
             }
         }
         return currentPath;

@@ -31,12 +31,12 @@ public class GraphPathImplTest extends GraphTestHelper {
     @Test
     public void checkIfPathChangesWhenGraphIsChanged() {
         List<Node> nodes = List.of(NODE_0, NODE_1, NODE_2, NODE_3);
-        AdjacencyMatrix beforeAdjactiveMatrix = getBeforeAdjactencyMatrix();
-        AdjacencyMatrix afterAdjactiveMatrix = getAfterAdjactencyMatrix();
+        AdjacencyMatrix beforeAdjacencyMatrix = getBeforeAdjacencyMatrix();
+        AdjacencyMatrix afterAdjacencyMatrix = getAfterAdjacencyMatrix();
 
         EdgesChangeStrategy dummyChangeStrategy = Mockito.mock(EdgesChangeStrategy.class);
-        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjactiveMatrix);
-        GraphImpl graph = new GraphImpl(nodes, beforeAdjactiveMatrix, dummyChangeStrategy);
+        when(dummyChangeStrategy.updateEdges(any())).thenReturn(afterAdjacencyMatrix);
+        GraphImpl graph = new GraphImpl(nodes, beforeAdjacencyMatrix, dummyChangeStrategy);
 
         GraphPathImpl beforeGraphPath = getSimplePath(graph);
 

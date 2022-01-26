@@ -4,21 +4,21 @@ import model.structures.GraphPath;
 import model.structures.PathHistory;
 
 public class CostFunctionWagesAndIll implements CostFunction {
-    private double wagesParameter;
+    private double weightsParameter;
     private double illParameter;
 
-    public CostFunctionWagesAndIll(double wagesParameter, double illParameter) {
-        this.wagesParameter = wagesParameter;
+    public CostFunctionWagesAndIll(double weightsParameter, double illParameter) {
+        this.weightsParameter = weightsParameter;
         this.illParameter = illParameter;
     }
 
     @Override
     public int evaluate(GraphPath graphPath) {
-        return (int) (wagesParameter * graphPath.getSumOfWages() + illParameter * graphPath.getIllnessCases());
+        return (int) (weightsParameter * graphPath.getSumOfWages() + illParameter * graphPath.getIllnessCases());
     }
 
     @Override
     public int evaluate(PathHistory pathHistory) {
-        return (int) (wagesParameter * pathHistory.getSumOfWages() + illParameter * pathHistory.getIllnessCases());
+        return (int) (weightsParameter * pathHistory.getSumOfWages() + illParameter * pathHistory.getIllnessCases());
     }
 }
