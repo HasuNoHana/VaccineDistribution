@@ -122,7 +122,7 @@ public class SimulatorTest extends GraphTestHelper {
         GraphImpl graphSpyded = Mockito.spy(graph);
         when(graphSpyded.getRandomPath()).thenReturn(simpleGraphPath);
 
-        CostFunction costFunction = new CostFunctionGraphWages();
+        CostFunction costFunction = new CostFunctionWagesAndIll(1, 0);
         SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(costFunction, KMAX);
         Simulator simulator = new Simulator(graphSpyded, simulatedAnnealing);
 
