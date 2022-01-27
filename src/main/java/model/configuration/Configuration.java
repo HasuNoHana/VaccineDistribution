@@ -9,10 +9,14 @@ public class Configuration {
     private final int maximalNumberOfResidents;
     private final int infectionParameter;
     private final int edgeWeightSum;
+    private final int kMax;
+    private final int weightParameterForCostFunction;
+    private final int illnessCasesParameterForCostFunction;
 
     public Configuration(int nodesNumber, long seedForResidentsGeneration, long seedForAdjacencyMatrix,
                          long seedForSimulatedAnnealing, int minimalNumberOfResidents, int maximalNumberOfResidents,
-                         int infectionParameter, int edgeWeightSum)
+                         int infectionParameter, int edgeWeightSum, int kMax,
+                         int weightParameterForCostFunction, int illnessCasesParameterForCostFunction)
     {
         this.nodesNumber = nodesNumber;
         this.seedForResidentsGeneration = seedForResidentsGeneration;
@@ -22,6 +26,9 @@ public class Configuration {
         this.maximalNumberOfResidents = maximalNumberOfResidents;
         this.infectionParameter = infectionParameter;
         this.edgeWeightSum = edgeWeightSum;
+        this.kMax = kMax;
+        this.weightParameterForCostFunction = weightParameterForCostFunction;
+        this.illnessCasesParameterForCostFunction = illnessCasesParameterForCostFunction;
     }
 
     public int getNodesNumber() {
@@ -56,5 +63,17 @@ public class Configuration {
     public int getEdgeWeightSum()
     {
         return edgeWeightSum;
+    }
+
+    public int getkMax() {
+        return kMax;
+    }
+
+    public int getWeightParameterForCostFunction() {
+        return weightParameterForCostFunction;
+    }
+
+    public int getIllnessCasesParameterForCostFunction() {
+        return illnessCasesParameterForCostFunction;
     }
 }
