@@ -12,7 +12,7 @@ public class GraphImpl implements Graph {
 
     private final HashMap<Integer, Node> nodes;
     private AdjacencyMatrix adjacencyMatrix;
-    private EdgesChangeStrategy edgesChangeStrategy;
+    private final EdgesChangeStrategy edgesChangeStrategy;
 
     private GraphImpl(AdjacencyMatrix adjacencyMatrix, HashMap<Integer, Node> nodes, EdgesChangeStrategy edgesChangeStrategy) {
         this.adjacencyMatrix = adjacencyMatrix;
@@ -20,12 +20,12 @@ public class GraphImpl implements Graph {
         this.edgesChangeStrategy = edgesChangeStrategy;
     }
 
-    public GraphImpl(List<Node> nodeArrayList, AdjacencyMatrix adjacencyMatrix, EdgesChangeStrategy edgesChangeStrategy) {
+    public GraphImpl(List<Node> nodeList, AdjacencyMatrix adjacencyMatrix, EdgesChangeStrategy edgesChangeStrategy) {
         this.adjacencyMatrix = adjacencyMatrix;
 
         nodes = new HashMap<>();
 
-        for (Node node : nodeArrayList)
+        for (Node node : nodeList)
             nodes.put(node.getId(), node);
 
         this.edgesChangeStrategy = edgesChangeStrategy;
@@ -55,15 +55,8 @@ public class GraphImpl implements Graph {
         if (nodesToSwap.size() == 2)
             Collections.swap(nodeArrayList, nodeArrayList.indexOf(nodesToSwap.get(0)), nodeArrayList.indexOf(nodesToSwap.get(1)));
 
-        ArrayList<Integer> weights = new ArrayList<>();
 
-        for (int i = 1; i < nodeArrayList.size(); i++) {
-            int weight = adjacencyMatrix.getMatrix()[nodeArrayList.get(i).getId()][nodeArrayList.get(i - 1).getId()];
-            weights.add(weight);
-        }
-
-        return new GraphPathImpl(this, nodeArrayList) {
-        };
+        return new GraphPathImpl(this, nodeArrayList);
     }
 
     @Override

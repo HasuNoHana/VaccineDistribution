@@ -5,7 +5,12 @@ import java.util.Random;
 
 public class AdjacencyMatrixGenerator {
 
+    private static Random theRandom = null;
+
     public static int[][] generateAdjacencyMatrix(int nodesNumber, int edgeWageSum, Random random) {
+        if(theRandom == null)
+            theRandom = random;
+
         int edgesNumber = (nodesNumber * (nodesNumber - 1)) / 2;
 
         if (edgeWageSum < edgesNumber)
@@ -28,7 +33,7 @@ public class AdjacencyMatrixGenerator {
         int leftNumbers = edgeWageSum - valuesQuantity;
 
         while (leftNumbers > 0) {
-            int currentValueToAdd = random.nextInt(valuesQuantity);
+            int currentValueToAdd = theRandom.nextInt(valuesQuantity);
             values[currentValueToAdd] += 1;
 
             leftNumbers--;
