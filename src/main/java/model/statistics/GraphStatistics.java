@@ -1,23 +1,17 @@
 package model.statistics;
 
-public class NodeStatistics {
+public class GraphStatistics {
     private final int residentsNumber;
     private final int illnessCases;
     private final int healthyResidents;
-    private final boolean isVaxDelivered;
-    private final int nodeId;
     private final int vaccinated;
-    private final int deliveryTime;
     private final int minute;
 
-    public NodeStatistics(int residentsNumber, int illnessCases, int healthyResidents, boolean isVaxDelivered, int nodeId, int vaccinated, int deliveryTime, int minute) {
+    public GraphStatistics(int residentsNumber, int illnessCases, int healthyResidents, int vaccinated, int minute) {
         this.residentsNumber = residentsNumber;
         this.illnessCases = illnessCases;
         this.healthyResidents = healthyResidents;
-        this.isVaxDelivered = isVaxDelivered;
-        this.nodeId = nodeId;
         this.vaccinated = vaccinated;
-        this.deliveryTime = deliveryTime;
         this.minute = minute;
     }
 
@@ -33,24 +27,11 @@ public class NodeStatistics {
         return healthyResidents;
     }
 
-    public boolean isVaxDelivered() {
-        return isVaxDelivered;
-    }
-
-    public int getNodeId() {
-        return nodeId;
-    }
-
     public int getVaccinated() {
         return vaccinated;
     }
 
-    public int getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public int getMinute()
-    {
+    public int getMinute() {
         return minute;
     }
 }
