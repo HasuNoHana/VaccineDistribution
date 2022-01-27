@@ -14,11 +14,11 @@ public class CostFunctionWagesAndIll implements CostFunction {
 
     @Override
     public int evaluate(GraphPath graphPath) {
-        return (int) (weightsParameter * graphPath.getSumOfWages() + illParameter * graphPath.getIllnessCases());
+        return (int) (weightsParameter * graphPath.getSumOfWages() + illParameter * graphPath.predictIllnessCases());
     }
 
     @Override
     public int evaluate(PathHistory pathHistory) {
-        return (int) (weightsParameter * pathHistory.getSumOfWages() + illParameter * pathHistory.getIllnessCases());
+        return (int) (weightsParameter * pathHistory.getSumOfWeights() + illParameter * pathHistory.getIllnessCases());
     }
 }

@@ -128,6 +128,20 @@ public class GraphPathImpl implements GraphPath {
     }
 
     @Override
+    public int predictIllnessCases() {
+        int deliveryTime = path.get(0).getDeliveryTime();
+        int predictedIllnessCases = path.get(0).predictIllnessCases(deliveryTime);
+
+        for(int i = 1; i < path.size(); i++)
+        {
+            deliveryTime += graph.getEdgeBetweenNodes(path.get(i - 1), path.get(i));
+            predictedIllnessCases += path.get(i).predictIllnessCases(deliveryTime);
+        }
+
+        return predictedIllnessCases;
+    }
+
+    @Override
     public int getLastEdge() {
         if (path.size() > 2) {
             throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation

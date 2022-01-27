@@ -1,18 +1,24 @@
 package model.simulatedannealing;
 
+import model.statistics.GraphStatistics;
 import model.structures.PathHistory;
 
 public class SimulationResult {
-
-    //TODO Powinno zawierac jakies info o tym ile ludzi zachorowalo itp
-    private PathHistory optimalPath;
+    private final PathHistory optimalPath;
+    private final GraphStatistics finalGraphStatistics;
 
     //uaktualnic o info o chorych
     public SimulationResult(PathHistory currentPath) {
         optimalPath = currentPath;
+        finalGraphStatistics = optimalPath.getGraphStatisticsForTheTime(optimalPath.getSumOfWeights());
     }
 
     public PathHistory getOptimalPath() {
         return optimalPath;
+    }
+
+    public GraphStatistics getFinalGraphStatistics()
+    {
+        return finalGraphStatistics;
     }
 }

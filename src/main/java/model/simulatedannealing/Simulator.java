@@ -73,12 +73,12 @@ public class Simulator {
             logger.info("Optimal path is {}", optimalPath);
 
             Node removedNode = currentPath.getFirstNode();
-            graph = graph.getUpdatedGraphWithoutNode(removedNode, optimalPath.getSumOfWages());
+            graph = graph.getUpdatedGraphWithoutNode(removedNode, optimalPath.getSumOfWeights());
             currentPath.removeFirstNode();
             currentPath.updateGraph(graph);
         }
         optimalPath.addNodeAndEdge(currentPath.getLastNode(), currentPath.getEdgeBetweenNodes(optimalPath.getLastNode(), currentPath.getSecondNode()));
-        optimalPath.getLastNode().deliverVaccines(optimalPath.getSumOfWages());
+        optimalPath.getLastNode().deliverVaccines(optimalPath.getSumOfWeights());
         logger.info("Optimal path is {}", optimalPath);
 
         return new SimulationResult(optimalPath);

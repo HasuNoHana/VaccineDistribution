@@ -34,4 +34,6 @@ public interface GraphPath {
     void updateGraph(Graph graph);
 
     int getEdgeBetweenNodes(Node node1, Node node2);
+
+    int predictIllnessCases();
 }

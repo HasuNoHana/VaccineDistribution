@@ -11,6 +11,6 @@ public class CostFunctionGraphWages implements CostFunction {
 
     @Override
     public int evaluate(PathHistory pathHistory) {
-        return pathHistory.getSumOfWages();
+        return pathHistory.getSumOfWeights();
     }
 }

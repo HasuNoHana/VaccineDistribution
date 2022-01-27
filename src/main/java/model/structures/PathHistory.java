@@ -1,6 +1,8 @@
 package model.structures;
 
 import model.simulatedannealing.CostFunction;
+import model.statistics.GraphStatistics;
+import model.statistics.NodeStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class PathHistory {
         return this.costFunction.evaluate(this);
     }
 
-    public int getSumOfWages() {
+    public int getSumOfWeights() {
         int sum = 0;
 
         for (Integer edge : edges) {
@@ -53,5 +55,24 @@ public class PathHistory {
             illnessCases += n.getIllnessCases();
 
         return illnessCases;
+    }
+
+    public GraphStatistics getGraphStatisticsForTheTime(int minutes)
+    {
+        int residentsNumber = 0;
+        int illnessCases = 0;
+        int healthyResidents = 0;
+        int vaccinated = 0;
+
+        for(Node n : nodes)
+        {
+            NodeStatistics nodeStatistics = n.getNodeStatsAtTime(minutes);
+            residentsNumber += nodeStatistics.getResidentsNumber();
+            illnessCases += nodeStatistics.getIllnessCases();
+            healthyResidents += nodeStatistics.getHealthyResidents();
+            vaccinated += nodeStatistics.getVaccinated();
+        }
+
+        return new GraphStatistics(residentsNumber, illnessCases, healthyResidents, vaccinated, minutes);
     }
 }

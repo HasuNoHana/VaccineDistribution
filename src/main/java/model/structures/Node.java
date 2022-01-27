@@ -61,8 +61,11 @@ public class Node {
         healthyResidents = residentsNumber - illnessCases;
     }
 
-    public int predictIllnessCases(int minutes) {
-        return calculateIllnessCases(minutes);
+    public int predictIllnessCases(int deliveryTime) {
+        if(isVaxDelivered)
+            return illnessCases;
+
+        return calculateIllnessCases(deliveryTime);
     }
 
     public void deliverVaccines(int minutes) {
@@ -84,6 +87,11 @@ public class Node {
         int deliveryTime = this.deliveryTime;
 
         return new NodeStatistics(residentsNumber, illnessCases, healthyResidents, isVaxDelivered, id, vaccinated, deliveryTime, minute);
+    }
+
+    public int getDeliveryTime()
+    {
+        return deliveryTime;
     }
 
     @Override
