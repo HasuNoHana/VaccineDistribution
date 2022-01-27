@@ -4,13 +4,24 @@ import model.structures.GraphPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Random;
+
 public class SimulatedAnnealing {
     final static Logger logger = LoggerFactory.getLogger(Simulator.class);
 
     private final CostFunction costFunction;
     private final int kMax;
+    private final Random random;
 
     public SimulatedAnnealing(CostFunction costFunction, int kMax) {
+        this.costFunction = costFunction;
+        this.kMax = kMax;
+        random = null;
+    }
+
+    public SimulatedAnnealing(CostFunction costFunction, int kMax, Random random)
+    {
+        this.random = random;
         this.costFunction = costFunction;
         this.kMax = kMax;
     }
@@ -49,7 +60,7 @@ public class SimulatedAnnealing {
         if (swappedPathCost < currentPathCost) {
             currentPath = swappedPath;
         } else {
-            double p = Math.random();
+            double p = (random == null) ? Math.random() : random.nextDouble();
             if (p < Math.exp(-(swappedPathCost - currentPathCost) / temperature)) {
                 currentPath = swappedPath;
             }
