@@ -1,4 +1,4 @@
-package model.simulatedAnnealing;
+package model.simulatedannealing;
 
 import model.structures.GraphPath;
 import org.slf4j.Logger;

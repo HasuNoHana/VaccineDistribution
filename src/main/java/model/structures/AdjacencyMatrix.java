@@ -8,7 +8,7 @@ public class AdjacencyMatrix {
     }
 
     public AdjacencyMatrix(int numberOfNodes) {
-        this.adjacencyMatrix = new int[numberOfNodes][numberOfNodes]; //TODO check if is automatilcy growing
+        this.adjacencyMatrix = new int[numberOfNodes][numberOfNodes];
     }
 
     public int getEdgeWeight(int firstNodeId, int secondNodeId) {
@@ -16,7 +16,7 @@ public class AdjacencyMatrix {
     }
 
     public int[][] getMatrix() {
-        return adjacencyMatrix;  //TODO remove me
+        return adjacencyMatrix;
     }
 
     public void setEdge(int firstNodeId, int secondNodeId, int weight) {

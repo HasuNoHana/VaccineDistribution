@@ -1,6 +1,6 @@
 package model.structures;
 
-import model.simulatedAnnealing.CostFunction;
+import model.simulatedannealing.CostFunction;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package model.structures;
 
-import model.simulatedAnnealing.Simulator;
+import model.simulatedannealing.Simulator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

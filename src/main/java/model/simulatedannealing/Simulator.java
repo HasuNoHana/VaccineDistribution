@@ -1,11 +1,11 @@
-package model.simulatedAnnealing;
+package model.simulatedannealing;
 
 import model.structures.Graph;
 import model.structures.GraphPath;
 import model.structures.Node;
 import model.structures.PathHistory;
 
-import static model.simulatedAnnealing.SimulatedAnnealing.logger;
+import static model.simulatedannealing.SimulatedAnnealing.logger;
 
 
 public class Simulator {

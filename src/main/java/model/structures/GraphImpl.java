@@ -86,7 +86,7 @@ public class GraphImpl implements Graph {
         HashMap<Integer, Node> subgraphNodes = new HashMap<>();
 
         for (Node n : nodes.values()) {
-            if (!n.getIsVaccinated()) {
+            if (!n.getIsVaxDelivered()) {
                 subgraphNodes.put(n.getId(), n);
             }
         }
@@ -99,7 +99,7 @@ public class GraphImpl implements Graph {
         ArrayList<Node> pathNodes = new ArrayList<>();
 
         for (Node n : nodes.values())
-            if (!n.getIsVaccinated())
+            if (!n.getIsVaxDelivered())
                 pathNodes.add(new Node(n));
 
         Collections.shuffle(pathNodes);

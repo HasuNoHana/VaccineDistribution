@@ -1,4 +1,4 @@
-package model.simulatedAnnealing;
+package model.simulatedannealing;
 
 import model.structures.PathHistory;
 
