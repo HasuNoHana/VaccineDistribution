@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class SimulationRunner {
 
-    public SimulationResult runSimulation(Configuration configuration)
+    public static SimulationResult runSimulation(Configuration configuration)
     {
         Graph graph = GraphFactory.buildGraph(configuration);
         var simulatedAnnealing = new SimulatedAnnealing(new CostFunctionWagesAndIll(configuration.getWeightParameterForCostFunction(), configuration.getIllnessCasesParameterForCostFunction())

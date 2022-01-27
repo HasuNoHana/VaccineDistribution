@@ -27,6 +27,10 @@ public class PathHistory {
         edges.add(edge);
     }
 
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
+
     public Node getLastNode() {
         return nodes.get(nodes.size() - 1);
     }
@@ -74,5 +78,10 @@ public class PathHistory {
         }
 
         return new GraphStatistics(residentsNumber, illnessCases, healthyResidents, vaccinated, minutes);
+    }
+
+    public ArrayList<Integer> getEdges()
+    {
+        return edges;
     }
 }
