@@ -91,6 +91,10 @@
                             </rules>
                             <excludes>
                                 <exclude>Main*</exclude>
+                                <exclude>model.configuration.*</exclude>
+                                <exclude>model.factory.*</exclude>
+                                <exclude>model.io.*</exclude>
+                                <exclude>ConfigCreator*</exclude>
                             </excludes>
                         </configuration>
                     </execution>

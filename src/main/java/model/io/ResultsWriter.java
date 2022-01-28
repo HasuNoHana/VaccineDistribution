@@ -52,7 +52,7 @@ public class ResultsWriter {
         return "Residents: " + gS.getResidentsNumber() + "\n" +
                 "Illness cases: " + gS.getIllnessCases() + " --> " + "[" + calculatePercentage(gS.getIllnessCases(), gS.getResidentsNumber()) + "%]" + "\n" +
                 "Healthy residents: " + gS.getHealthyResidents() + " --> " + "[" + calculatePercentage(gS.getHealthyResidents(), gS.getResidentsNumber()) + "%]" + "\n" +
-                "Vaccinated residents" + gS.getVaccinated() + " --> " + "[" + calculatePercentage(gS.getVaccinated(), gS.getResidentsNumber()) + "%]";
+                "Vaccinated residents: " + gS.getVaccinated() + " --> " + "[" + calculatePercentage(gS.getVaccinated(), gS.getResidentsNumber()) + "%]";
     }
 
     private static String getNodeStatisticsString(NodeStatistics nS)

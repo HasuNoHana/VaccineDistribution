@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         if(args.length != 3)
         {
-            System.out.println("");
+            System.out.println("Wrong amount of program arguments");
             return;
         }
 

@@ -53,7 +53,7 @@ public class GraphImpl implements Graph {
                 collect(Collectors.toCollection(ArrayList::new));
 
         if (nodeArrayList.indexOf(nodesToSwap.get(0)) == 0 || nodeArrayList.indexOf(nodesToSwap.get(1)) == 0)
-            throw new RuntimeException("TODO POPRAW MNIE PATRYK!"); //xdddddddddd
+            throw new RuntimeException("");
 
         if (nodesToSwap.size() == 2)
             Collections.swap(nodeArrayList, nodeArrayList.indexOf(nodesToSwap.get(0)), nodeArrayList.indexOf(nodesToSwap.get(1)));

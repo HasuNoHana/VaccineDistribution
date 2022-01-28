@@ -147,9 +147,9 @@ public class GraphPathImpl implements GraphPath {
     @Override
     public int getLastEdge() {
         if (path.size() > 2) {
-            throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");// TODO fix this implementation
+            throw new RuntimeException("You shouldn't get last wage from path bigger then two nodes");
         }
 
-        return graph.getEdgeBetweenNodes(path.get(path.size() - 2), path.get(path.size() - 1)); //TODO test this
+        return graph.getEdgeBetweenNodes(path.get(path.size() - 2), path.get(path.size() - 1));
     }
 }
