@@ -61,10 +61,11 @@ public class Simulator {
         logger.info("Start simulation");
         GraphPath currentPath = graph.getRandomPath();
         logger.debug("Random generated path is following {}", currentPath);
+        currentPath.getFirstNode().deliverVaccines(0);
         optimalPath.addNode(currentPath.getFirstNode());
         logger.info("Optimal path is {}", optimalPath);
 
-        graph = graph.getUpdatedGraphWithoutNode(currentPath.getFirstNode(), 0);
+        graph = graph.getUpdatedGraphWithoutNode(currentPath.getFirstNode());
 
         while (!stopSimulation(currentPath)) {
             currentPath = simulatedAnnealing.findOptimaPath(currentPath);
@@ -73,7 +74,7 @@ public class Simulator {
             logger.info("Optimal path is {}", optimalPath);
 
             Node removedNode = currentPath.getFirstNode();
-            graph = graph.getUpdatedGraphWithoutNode(removedNode, optimalPath.getSumOfWeights());
+            graph = graph.getUpdatedGraphWithoutNode(removedNode);
             currentPath.removeFirstNode();
             currentPath.updateGraph(graph);
         }

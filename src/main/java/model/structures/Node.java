@@ -69,7 +69,6 @@ public class Node {
     }
 
     public void deliverVaccines(int minutes) {
-
         if(minutes != 0)
             updateNodeStatistics(minutes);
 
@@ -80,11 +79,11 @@ public class Node {
 
     public NodeStatistics getNodeStatsAtTime(int minute)
     {
-        int illnessCases = calculateIllnessCases(minute);
-        int healthyResidents = residentsNumber - illnessCases;
-        boolean isVaxDelivered = this.deliveryTime >= minute;
-        int vaccinated = this.isVaxDelivered ? (residentsNumber - illnessCases) : 0;
         int deliveryTime = this.deliveryTime;
+        boolean isVaxDelivered = minute >= deliveryTime;
+        int illnessCases = calculateIllnessCases(isVaxDelivered ? deliveryTime : minute);
+        int healthyResidents = residentsNumber - illnessCases;
+        int vaccinated = isVaxDelivered ? (residentsNumber - illnessCases) : 0;
 
         return new NodeStatistics(residentsNumber, illnessCases, healthyResidents, isVaxDelivered, id, vaccinated, deliveryTime, minute);
     }

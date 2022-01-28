@@ -1,9 +1,6 @@
 package model.structures;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static model.structures.GraphPathImpl.logger;
@@ -13,6 +10,7 @@ public class GraphImpl implements Graph {
     private final HashMap<Integer, Node> nodes;
     private AdjacencyMatrix adjacencyMatrix;
     private final EdgesChangeStrategy edgesChangeStrategy;
+    private static Random randomForShuffle = new Random();
 
     private GraphImpl(AdjacencyMatrix adjacencyMatrix, HashMap<Integer, Node> nodes, EdgesChangeStrategy edgesChangeStrategy) {
         this.adjacencyMatrix = adjacencyMatrix;
@@ -35,6 +33,11 @@ public class GraphImpl implements Graph {
     {
         for(Node node : nodes.values())
             node.updateNodeStatistics(minutes);
+    }
+
+    public static void setRandomForShuffle(Random random)
+    {
+        randomForShuffle = random;
     }
 
     @Override
@@ -95,7 +98,7 @@ public class GraphImpl implements Graph {
             if (!n.getIsVaxDelivered())
                 pathNodes.add(new Node(n));
 
-        Collections.shuffle(pathNodes);
+        Collections.shuffle(pathNodes, randomForShuffle);
 
         GraphPathImpl graphPath = new GraphPathImpl(this);
 
@@ -115,8 +118,6 @@ public class GraphImpl implements Graph {
     @Override
     public Graph getUpdatedGraphWithoutNode(Node nodeToBeRemoved, int minutes) {
         this.adjacencyMatrix = this.edgesChangeStrategy.updateEdges(this.adjacencyMatrix);
-        nodeToBeRemoved.deliverVaccines(minutes);
-        updateNodes(minutes);
         logger.info("Updating Matrix to " + this.adjacencyMatrix);
 
         return getSubgraphWithUnvisitedNodes();

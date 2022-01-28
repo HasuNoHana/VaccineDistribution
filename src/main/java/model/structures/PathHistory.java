@@ -23,6 +23,7 @@ public class PathHistory {
     }
 
     public void addNodeAndEdge(Node node, int edge) {
+        node.deliverVaccines(this.getSumOfWeights() + edge);
         nodes.add(new Node(node));
         edges.add(edge);
     }

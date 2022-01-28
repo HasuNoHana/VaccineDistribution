@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class GraphPathImpl implements GraphPath {
     final static Logger logger = LoggerFactory.getLogger(Simulator.class);
     private Graph graph;
-
+    private static Random random = new Random();
     private ArrayList<Node> path;
 
     public GraphPathImpl(Graph graph) {
@@ -23,6 +23,11 @@ public class GraphPathImpl implements GraphPath {
     public GraphPathImpl(Graph graph, ArrayList<Node> path) {
         this.path = path;
         this.graph = graph;
+    }
+
+    public static void setRandom(Random theRandom)
+    {
+        random = theRandom;
     }
 
     @Override
@@ -41,8 +46,6 @@ public class GraphPathImpl implements GraphPath {
 
     @Override
     public Node getRandomNode() {
-        Random random = new Random();
-
         int positionInPath = Math.max(1, random.nextInt(path.size()));
 
         return path.get(positionInPath);

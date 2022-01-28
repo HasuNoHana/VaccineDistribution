@@ -2,6 +2,7 @@ package model.io;
 
 import model.simulatedannealing.SimulationResult;
 import model.statistics.GraphStatistics;
+import model.statistics.NodeStatistics;
 import model.structures.Node;
 import model.structures.PathHistory;
 
@@ -10,6 +11,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class ResultsWriter {
+
+    private static double calculatePercentage(double v1, double v2)
+    {
+        return (v1 / v2) * 100;
+    }
+
     private static String getOptimalPathString(ArrayList<Integer> edges, ArrayList<Node> nodes)
     {
         StringBuilder s = new StringBuilder();
@@ -29,17 +36,28 @@ public class ResultsWriter {
         return s.toString();
     }
 
-    private static String getGraphStatisticString(GraphStatistics gS)
+    private static String getGraphStatisticsStringInOneLine(GraphStatistics gS)
     {
-        StringBuilder sB = new StringBuilder();
 
-        sB.append(gS.getMinute()).append(" ").
-                append(gS.getResidentsNumber()).append(" ").
-                append(gS.getIllnessCases()).append(" ").
-                append(gS.getHealthyResidents()).append(" ").
-                append(gS.getVaccinated());
+        return gS.getMinute() + " " +
+                gS.getResidentsNumber() + " " +
+                gS.getIllnessCases() + " " +
+                gS.getHealthyResidents() + " " +
+                gS.getVaccinated();
+    }
 
-        return sB.toString();
+    private static String getGraphStatisticsString(GraphStatistics gS)
+    {
+
+        return "Residents: " + gS.getResidentsNumber() + "\n" +
+                "Illness cases: " + gS.getIllnessCases() + " --> " + "[" + calculatePercentage(gS.getIllnessCases(), gS.getResidentsNumber()) + "%]" + "\n" +
+                "Healthy residents: " + gS.getHealthyResidents() + " --> " + "[" + calculatePercentage(gS.getHealthyResidents(), gS.getResidentsNumber()) + "%]" + "\n" +
+                "Vaccinated residents" + gS.getVaccinated() + " --> " + "[" + calculatePercentage(gS.getVaccinated(), gS.getResidentsNumber()) + "%]";
+    }
+
+    private static String getNodeStatisticsString(NodeStatistics nS)
+    {
+        return nS.getNodeId() + " " + nS.getResidentsNumber() + " " + nS.getIllnessCases() + " " + nS.getHealthyResidents() + " " + nS.getVaccinated();
     }
 
     public static void writeResultsToFile(SimulationResult simulationResult, int timeGap, String path) throws FileNotFoundException {
@@ -49,15 +67,23 @@ public class ResultsWriter {
         stringBuilder.append("Optimal path [nodeId(time to the node):").append("\n");
         stringBuilder.append(getOptimalPathString(thePathHistory.getEdges(), thePathHistory.getNodes()));
         stringBuilder.append("\nTotal time of delivery: ").append(thePathHistory.getSumOfWeights()).append("\n");
-        stringBuilder.append("The cost function value: ").append(thePathHistory.evaluate()).append("\n");
-        stringBuilder.append("Statistics: ").append("\n");
+        stringBuilder.append("The cost function value: ").append(thePathHistory.evaluate()).append("\n").append("\n");
+        stringBuilder.append("Statistics at the end of simulation: ").append("\n");
+        stringBuilder.append(getGraphStatisticsString(thePathHistory.getGraphStatisticsForTheTime(thePathHistory.getSumOfWeights()))).append("\n");
+        stringBuilder.append("\n").append("Statistics of each node: ").append("\n");
+        stringBuilder.append("id residentsNumber illnessCases healthyResidents vaccinated").append("\n");
+
+        for(Node n : thePathHistory.getPath())
+            stringBuilder.append(getNodeStatisticsString(n.getNodeStatsAtTime(thePathHistory.getSumOfWeights()))).append("\n");
+
+        stringBuilder.append("\n").append("Statistics step by step: ").append("\n");
         stringBuilder.append("minute residentsNumber illnessCases healthyResidents vaccinated").append("\n");
 
         int time = 0;
 
         do
         {
-            stringBuilder.append(getGraphStatisticString(thePathHistory.getGraphStatisticsForTheTime(Math.min(time, thePathHistory.getSumOfWeights())))).append("\n");
+            stringBuilder.append(getGraphStatisticsStringInOneLine(thePathHistory.getGraphStatisticsForTheTime(Math.min(time, thePathHistory.getSumOfWeights())))).append("\n");
             time += timeGap;
 
         }while (time < thePathHistory.getSumOfWeights());

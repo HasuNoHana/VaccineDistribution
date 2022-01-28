@@ -1,27 +1,38 @@
 package model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Configuration {
     private final int nodesNumber;
     private final long seedForResidentsGeneration;
     private final long seedForAdjacencyMatrix;
     private final long seedForSimulatedAnnealing;
+    private final long seedForShuffleFunction;
+    private final long seedForRandomNode;
     private final int minimalNumberOfResidents;
     private final int maximalNumberOfResidents;
     private final int infectionParameter;
     private final int edgeWeightSum;
     private final int kMax;
-    private final int weightParameterForCostFunction;
-    private final int illnessCasesParameterForCostFunction;
+    private final double weightParameterForCostFunction;
+    private final double illnessCasesParameterForCostFunction;
 
-    public Configuration(int nodesNumber, long seedForResidentsGeneration, long seedForAdjacencyMatrix,
-                         long seedForSimulatedAnnealing, int minimalNumberOfResidents, int maximalNumberOfResidents,
-                         int infectionParameter, int edgeWeightSum, int kMax,
-                         int weightParameterForCostFunction, int illnessCasesParameterForCostFunction)
+    @JsonCreator
+    public Configuration(@JsonProperty("nodesNumber")int nodesNumber, @JsonProperty("seedForResidentsGeneration") long seedForResidentsGeneration, @JsonProperty("seedForAdjacencyMatrix")long seedForAdjacencyMatrix,
+                         @JsonProperty("seedForSimulatedAnnealing") long seedForSimulatedAnnealing, @JsonProperty("seedForShuffleFunction") long seedForShuffleFunction,
+                         @JsonProperty("seedForRandomNode") long seedForRandomNode,
+                         @JsonProperty("minimalNumberOfResidents") int minimalNumberOfResidents,
+                         @JsonProperty("maximalNumberOfResidents") int maximalNumberOfResidents, @JsonProperty("infectionParameter") int infectionParameter,
+                         @JsonProperty("edgeWeightSum") int edgeWeightSum, @JsonProperty("kMax") int kMax,
+                         @JsonProperty("weightParameterForCostFunction") double weightParameterForCostFunction, @JsonProperty("illnessCasesParameterForCostFunction") double illnessCasesParameterForCostFunction)
     {
         this.nodesNumber = nodesNumber;
         this.seedForResidentsGeneration = seedForResidentsGeneration;
         this.seedForAdjacencyMatrix = seedForAdjacencyMatrix;
         this.seedForSimulatedAnnealing = seedForSimulatedAnnealing;
+        this.seedForShuffleFunction = seedForShuffleFunction;
+        this.seedForRandomNode = seedForRandomNode;
         this.minimalNumberOfResidents = minimalNumberOfResidents;
         this.maximalNumberOfResidents = maximalNumberOfResidents;
         this.infectionParameter = infectionParameter;
@@ -47,6 +58,14 @@ public class Configuration {
         return seedForSimulatedAnnealing;
     }
 
+    public long getSeedForShuffleFunction() {
+        return seedForShuffleFunction;
+    }
+
+    public long getSeedForRandomNode() {
+        return seedForRandomNode;
+    }
+
     public int getMinimalNumberOfResidents() {
         return minimalNumberOfResidents;
     }
@@ -69,11 +88,11 @@ public class Configuration {
         return kMax;
     }
 
-    public int getWeightParameterForCostFunction() {
+    public double getWeightParameterForCostFunction() {
         return weightParameterForCostFunction;
     }
 
-    public int getIllnessCasesParameterForCostFunction() {
+    public double getIllnessCasesParameterForCostFunction() {
         return illnessCasesParameterForCostFunction;
     }
 }

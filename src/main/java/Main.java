@@ -19,7 +19,7 @@ public class Main {
 
         SimulationResult simulationResult = SimulationRunner.runSimulation(config);
 
-        int timeGap = Integer.parseInt(args[2]);
+        int timeGap = Integer.parseInt(args[1]);
 
         ResultsWriter.writeResultsToFile(simulationResult, timeGap, args[2]);
     }
