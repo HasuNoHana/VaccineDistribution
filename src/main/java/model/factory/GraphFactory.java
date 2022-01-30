@@ -9,12 +9,11 @@ import java.util.Random;
 
 public class GraphFactory {
 
-    private static List<Node> generateNodes(long seedForResidents, int minimalNumberOfHabitats, int maximumNumberOfHabitats, int nodeNumber, int infectionParameter)
-    {
+    private static List<Node> generateNodes(long seedForResidents, int minimalNumberOfHabitats, int maximumNumberOfHabitats, int nodeNumber, double infectionParameter) {
         Random random = new Random(seedForResidents);
         ArrayList<Node> nodes = new ArrayList<>();
 
-        for(int i = 0; i < nodeNumber; i++)
+        for (int i = 0; i < nodeNumber; i++)
             nodes.add(new Node(i, Math.min(maximumNumberOfHabitats, random.nextInt((maximumNumberOfHabitats - minimalNumberOfHabitats)) + minimalNumberOfHabitats), infectionParameter));
 
 

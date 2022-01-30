@@ -2,8 +2,11 @@ package model.simulatedannealing;
 
 import model.structures.GraphPath;
 import model.structures.PathHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CostFunctionWagesAndIll implements CostFunction {
+    final static Logger logger = LoggerFactory.getLogger(CostFunctionWagesAndIll.class);
     private final double weightsParameter;
     private final double illParameter;
 
@@ -14,7 +17,11 @@ public class CostFunctionWagesAndIll implements CostFunction {
 
     @Override
     public int evaluate(GraphPath graphPath) {
-        return (int) (weightsParameter * graphPath.getSumOfWages() + illParameter * graphPath.predictIllnessCases());
+        double partFromWages = weightsParameter * graphPath.getSumOfWages();
+        double partFromIllness = illParameter * graphPath.predictIllnessCases();
+
+        logger.warn("Cost function from wages: {} from illnes: {}", partFromWages, partFromIllness);
+        return (int) (partFromWages + partFromIllness);
     }
 
     @Override

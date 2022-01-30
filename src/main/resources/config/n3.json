@@ -1,15 +1,15 @@
 {
-  "nodesNumber": 10,
+  "nodesNumber": 100,
   "seedForResidentsGeneration": -3839072563320220138,
   "seedForAdjacencyMatrix": -2448846607849991729,
   "seedForSimulatedAnnealing": -1559790343727974963,
-  "seedForShuffleFunction": 4406471425994804233,
-  "seedForRandomNode": 6638539876247605447,
+  "seedForShuffleFunction": 44064714259904233,
+  "seedForRandomNode": 66385398762476447,
   "minimalNumberOfResidents": 10000,
   "maximalNumberOfResidents": 100000,
-  "infectionParameter": 2,
-  "edgeWeightSum": 1000,
-  "kMax": 1000,
+  "infectionParameter": 1.035,
+  "edgeWeightSum": 1000000,
+  "kMax": 10000,
   "weightParameterForCostFunction": 1.0,
-  "illnessCasesParameterForCostFunction": 0.0
+  "illnessCasesParameterForCostFunction": 0.04
 }

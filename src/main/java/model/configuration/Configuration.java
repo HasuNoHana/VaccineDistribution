@@ -8,22 +8,22 @@ public class Configuration {
     private final long seedForResidentsGeneration;
     private final long seedForAdjacencyMatrix;
     private final long seedForSimulatedAnnealing;
-    private final long seedForShuffleFunction;
-    private final long seedForRandomNode;
+    private final double infectionParameter;
+    public long seedForShuffleFunction;
     private final int minimalNumberOfResidents;
     private final int maximalNumberOfResidents;
-    private final int infectionParameter;
+    public long seedForRandomNode;
     private final int edgeWeightSum;
     private final int kMax;
     private final double weightParameterForCostFunction;
     private final double illnessCasesParameterForCostFunction;
 
     @JsonCreator
-    public Configuration(@JsonProperty("nodesNumber")int nodesNumber, @JsonProperty("seedForResidentsGeneration") long seedForResidentsGeneration, @JsonProperty("seedForAdjacencyMatrix")long seedForAdjacencyMatrix,
+    public Configuration(@JsonProperty("nodesNumber") int nodesNumber, @JsonProperty("seedForResidentsGeneration") long seedForResidentsGeneration, @JsonProperty("seedForAdjacencyMatrix") long seedForAdjacencyMatrix,
                          @JsonProperty("seedForSimulatedAnnealing") long seedForSimulatedAnnealing, @JsonProperty("seedForShuffleFunction") long seedForShuffleFunction,
                          @JsonProperty("seedForRandomNode") long seedForRandomNode,
                          @JsonProperty("minimalNumberOfResidents") int minimalNumberOfResidents,
-                         @JsonProperty("maximalNumberOfResidents") int maximalNumberOfResidents, @JsonProperty("infectionParameter") int infectionParameter,
+                         @JsonProperty("maximalNumberOfResidents") int maximalNumberOfResidents, @JsonProperty("infectionParameter") double infectionParameter,
                          @JsonProperty("edgeWeightSum") int edgeWeightSum, @JsonProperty("kMax") int kMax,
                          @JsonProperty("weightParameterForCostFunction") double weightParameterForCostFunction, @JsonProperty("illnessCasesParameterForCostFunction") double illnessCasesParameterForCostFunction)
     {
@@ -74,8 +74,7 @@ public class Configuration {
         return maximalNumberOfResidents;
     }
 
-    public int getInfectionParameter()
-    {
+    public double getInfectionParameter() {
         return infectionParameter;
     }
 

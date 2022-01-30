@@ -37,7 +37,9 @@ public class SimulatedAnnealing {
 
         double temperature;
         for (int k = 0; k < kMax; k++) {
-            temperature = (1.0 - (k + 1.0) / kMax);
+//            temperature = (1.0 - (k + 1.0) / kMax);
+            temperature = 100.0 * (1.0 - (k * 1.0) / kMax); //TODO ustalic lepsza funkcje powinna zanikac od polowy do wartosci ponizej jeden
+            logger.debug("Temperature is {}", temperature);
             currentPath = doOneStepOfSimulatedAnnealing(currentPath, temperature);
         }
 
@@ -57,12 +59,13 @@ public class SimulatedAnnealing {
         logger.debug("Swapped path is {}", swappedPath);
         logger.debug("New cost function is {}", swappedPathCost);
 
-        if (swappedPathCost < currentPathCost) {
+        if (swappedPathCost <= currentPathCost) {
             currentPath = swappedPath;
         } else {
             double p = (random == null) ? Math.random() : random.nextDouble();
             if (p < Math.exp(-(swappedPathCost - currentPathCost) / temperature)) {
                 currentPath = swappedPath;
+                logger.info("More costyl path was chosen. Cost function difference is {}", swappedPathCost - currentPathCost);
             }
         }
         return currentPath;

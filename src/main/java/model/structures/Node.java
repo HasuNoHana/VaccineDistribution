@@ -1,20 +1,23 @@
 package model.structures;
 
 import model.statistics.NodeStatistics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 public class Node {
+    final static Logger logger = LoggerFactory.getLogger(Node.class);
     private final int residentsNumber;
     private int illnessCases;
     private int healthyResidents;
     private boolean isVaxDelivered;
-    private final int infectingParameter;
+    private final double infectingParameter;
     private final int id;
     private int vaccinated;
     private int deliveryTime;
 
-    public Node(int id, int residentsNumber, int infectingParameter) {
+    public Node(int id, int residentsNumber, double infectingParameter) {
         this.id = id;
         this.residentsNumber = residentsNumber;
         this.illnessCases = 0;
@@ -62,6 +65,7 @@ public class Node {
     }
 
     public int predictIllnessCases(int deliveryTime) {
+        logger.debug("In node {} predicted number of ill is {}/{}", id, calculateIllnessCases(deliveryTime), residentsNumber);
         if(isVaxDelivered)
             return illnessCases;
 
