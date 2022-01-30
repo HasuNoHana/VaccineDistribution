@@ -1,12 +1,12 @@
 import model.configuration.Configuration;
 import model.io.ConfigurationReader;
+import model.io.ResultsWriter;
 import model.simulatedannealing.SimulationResult;
 import model.simulationrunner.SimulationRunner;
 import model.statistics.GraphStatistics;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
 
 public class Main {
     private static void writeResult(SimulationResult sR, String path) throws FileNotFoundException {
@@ -19,25 +19,70 @@ public class Main {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        List<String> filenames = List.of("n1", "n2", "n3", "n4", "n5");
-        for (String fileName :
-                filenames) {
-            for (int i = 0; i < 10; i++) {
-                args = new String[]{"/home/zuznanna/IdeaProjects/VaccineDistribution/src/main/resources/config/" + fileName + ".json", "out/" + fileName + ".txt"};
+        String[] fileNames = new String[]
+                {
+                        "n10i2k100w0.0ill1.0",
+                        "n10i2k100w0.5ill0.5",
+                        "n10i2k100w1.0ill0.0",
+                        "n10i2k500w0.0ill1.0",
+                        "n10i2k500w0.5ill0.5",
+                        "n10i2k500w1.0ill0.0",
+                        "n10i2k1000w0.0ill1.0",
+                        "n10i2k1000w0.5ill0.5",
+                        "n10i2k1000w1.0ill0.0",
+                        "n10i6k100w0.0ill1.0",
+                        "n10i6k100w0.5ill0.5",
+                        "n10i6k100w1.0ill0.0",
+                        "n10i6k500w0.0ill1.0",
+                        "n10i6k500w0.5ill0.5",
+                        "n10i6k500w1.0ill0.0",
+                        "n10i6k1000w0.0ill1.0",
+                        "n10i6k1000w0.5ill0.5",
+                        "n10i6k1000w1.0ill0.0",
+                        "n50i2k100w0.0ill1.0",
+                        "n50i2k100w0.5ill0.5",
+                        "n50i2k100w1.0ill0.0",
+                        "n50i2k500w0.0ill1.0",
+                        "n50i2k500w0.5ill0.5",
+                        "n50i2k500w1.0ill0.0",
+                        "n50i2k1000w0.0ill1.0",
+                        "n50i2k1000w0.5ill0.5",
+                        "n50i2k1000w1.0ill0.0",
+                        "n50i6k100w0.0ill1.0",
+                        "n50i6k100w0.5ill0.5",
+                        "n50i6k100w1.0ill0.0",
+                        "n50i6k500w0.0ill1.0",
+                        "n50i6k500w0.5ill0.5",
+                        "n50i6k500w1.0ill0.0",
+                        "n50i6k1000w0.0ill1.0",
+                        "n50i6k1000w0.5ill0.5",
+                        "n50i6k1000w1.0ill0.0",
+                        "n100i2k100w0.0ill1.0",
+                        "n100i2k100w0.5ill0.5",
+                        "n100i2k100w1.0ill0.0",
+                        "n100i2k500w0.0ill1.0",
+                        "n100i2k500w0.5ill0.5",
+                        "n100i2k500w1.0ill0.0",
+                        "n100i2k1000w0.0ill1.0",
+                        "n100i2k1000w0.5ill0.5",
+                        "n100i2k1000w1.0ill0.0",
+                        "n100i6k100w0.0ill1.0",
+                        "n100i6k100w0.5ill0.5",
+                        "n100i6k100w1.0ill0.0",
+                        "n100i6k500w0.0ill1.0",
+                        "n100i6k500w0.5ill0.5",
+                        "n100i6k500w1.0ill0.0",
+                        "n100i6k1000w0.0ill1.0",
+                        "n100i6k1000w0.5ill0.5",
+                        "n100i6k1000w1.0ill0.0"
+                };
 
-                Configuration config = ConfigurationReader.readModelFromJson(args[0]);
-
-                config.seedForRandomNode += i * 10000000;
-                config.seedForShuffleFunction += i * 10000000;
-
-                SimulationResult simulationResult = SimulationRunner.runSimulation(config);
-                String outPathName = args[1] + String.valueOf(i);
-                writeResult(simulationResult, outPathName);
-            }
-
+        for(String s : fileNames)
+        {
+            Configuration config = ConfigurationReader.readModelFromJson("src/main/resources/config/" + s + ".json");
+            SimulationResult simulationResult = SimulationRunner.runSimulation(config);
+            ResultsWriter.writeResultsToFile(simulationResult, 10, "src/main/resources/results/" + s + ".txt");
 
         }
-
-//        ResultsWriter.writeResultsToFile(simulationResult, timeGap, args[1]);
     }
 }

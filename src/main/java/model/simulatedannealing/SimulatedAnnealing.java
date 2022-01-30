@@ -38,7 +38,7 @@ public class SimulatedAnnealing {
         double temperature;
         for (int k = 0; k < kMax; k++) {
 //            temperature = (1.0 - (k + 1.0) / kMax);
-            temperature = 100.0 * (1.0 - (k * 1.0) / kMax); //TODO ustalic lepsza funkcje powinna zanikac od polowy do wartosci ponizej jeden
+            temperature = 100.0 * (1.0 - (k * 1.0) / kMax);
             logger.debug("Temperature is {}", temperature);
             currentPath = doOneStepOfSimulatedAnnealing(currentPath, temperature);
         }
