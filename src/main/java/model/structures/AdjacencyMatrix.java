@@ -1,26 +1,54 @@
 package model.structures;
 
 public class AdjacencyMatrix {
-    private int[][] adjacanceMatrix;
+    private int[][] adjacencyMatrix;
 
-    public AdjacencyMatrix(int[][] adjacanceMatrix) {
-        this.adjacanceMatrix = adjacanceMatrix;
+    public AdjacencyMatrix(int[][] adjacencyMatrix) {
+        this.adjacencyMatrix = adjacencyMatrix;
     }
 
-    public AdjacencyMatrix() {
-        this.adjacanceMatrix = new int[100][100]; //TODO check if is automatilcy growing
+    public AdjacencyMatrix(int numberOfNodes) {
+        this.adjacencyMatrix = new int[numberOfNodes][numberOfNodes];
     }
 
     public int getEdgeWeight(int firstNodeId, int secondNodeId) {
-        return adjacanceMatrix[firstNodeId][secondNodeId];
+        return adjacencyMatrix[firstNodeId][secondNodeId];
     }
 
     public int[][] getMatrix() {
-        return adjacanceMatrix;  //TODO remove me
+        return adjacencyMatrix;
     }
 
     public void setEdge(int firstNodeId, int secondNodeId, int weight) {
-        adjacanceMatrix[firstNodeId][secondNodeId] = weight;
-        adjacanceMatrix[secondNodeId][firstNodeId] = weight;
+        adjacencyMatrix[firstNodeId][secondNodeId] = weight;
+        adjacencyMatrix[secondNodeId][firstNodeId] = weight;
+    }
+
+    public int getNumberOfNodes() {
+        return this.adjacencyMatrix.length;
+    }
+
+    public int getSumOfEdges() {
+        int sum = 0;
+        for (int[] matrix : adjacencyMatrix) {
+            for (int j = 0; j < adjacencyMatrix.length; j++) {
+                sum += matrix[j];
+            }
+        }
+        return sum / 2;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder matrix = new StringBuilder();
+        for (int[] values : adjacencyMatrix) {
+            for (int j = 0; j < adjacencyMatrix.length; j++) {
+                matrix.append(values[j]).append(" ");
+            }
+            matrix.append("\n");
+        }
+        return "AdjacencyMatrix{" + "\n" +
+                matrix +
+                '}';
     }
 }

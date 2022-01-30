@@ -3,8 +3,6 @@ package model.structures;
 import java.util.List;
 
 public interface GraphPath {
-    void addToPath(Node node, int wage);
-
     void addToPath(Node node);
 
     Node getRandomNode();
@@ -32,4 +30,10 @@ public interface GraphPath {
     int getIllnessCases();
 
     List<Node> getPath();
+
+    void updateGraph(Graph graph);
+
+    int getEdgeBetweenNodes(Node node1, Node node2);
+
+    int predictIllnessCases();
 }
